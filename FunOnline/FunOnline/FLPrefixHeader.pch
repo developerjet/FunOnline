@@ -1,0 +1,55 @@
+//
+//  FLPrefixHeader_pch
+//  FunOnline
+//
+//  Created by Original_TJ on 2018/4/4.
+//  Copyright © 2018年 iOS. All rights reserved.
+//
+
+#ifndef FLPrefixHeader_pch
+#define FLPrefixHeader_pch
+
+#import "FLMacrosHeader.h"
+
+
+#define WeakSelf    __weak typeof(self) weakSelf = self
+
+
+/** AppDelegate */
+#define kAppDelegate   ((AppDelegate *)([UIApplication sharedApplication].delegate))
+
+/** 颜色相关 */
+#define RGB(r, g, b) [UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:1.0]
+/**  16进制颜色设置 */
+#define COLORHEX(hex)   [UIColor colorWithHexString:hex]
+
+/** SCREEN_VIEW */
+#define SCREEN_WIDTH    [[UIScreen mainScreen] bounds].size.width
+#define SCREEN_HEIGHT   [[UIScreen mainScreen] bounds].size.height
+
+/** 屏幕适配 */
+#define iPhone6P (SCREEN_HEIGHT == 736)
+#define iPhone6  (SCREEN_HEIGHT == 667)
+#define iPhone5  (SCREEN_HEIGHT == 568)
+#define iPhone4  (SCREEN_HEIGHT == 480)
+
+// 判断是否是iPhone X
+#define iPhoneX ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(1125, 2436), [[UIScreen mainScreen] currentMode].size) : NO)
+
+/** 通知相关 */
+#define NC  [NSNotificationCenter defaultCenter]
+#define NC_Reload_News      @"NS_Reload_News"
+#define NC_Reload_Picture   @"NS_Reload_Picture"
+
+/** 本地存储 */
+#define UD  [NSUserDefaults standardUserDefaults]
+/// 搜索历史保存
+#define UD_LOGON_ISEXIT  @"UD_LOGON_ISEXIT"
+#define UD_SEARCH_IMAGE  @"UD_SEARCH_IMAGE"
+#define UD_SEARCH_MUSIC  @"UD_SEARCH_MUSIC"
+
+
+/** app当前版本号 */
+#define kVersionNum  [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"]
+
+#endif /* FLPrefixHeader_pch */
