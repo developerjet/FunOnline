@@ -71,11 +71,15 @@ static NSString *const kMineCellReuseIdentifier = @"kMineCellReuseIdentifier";
     CGFloat h = iPhone5 ? SCREEN_HEIGHT * 0.4 : SCREEN_WIDTH * 0.62;
     UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, h)];
     
-    // 94D69F, 50B6AA
-    IBWaterWaveView *waveView = [[IBWaterWaveView alloc] initWithFrame:headerView.bounds startColor:IBHexColorA(0x94d69f, 0.3) endColor:IBHexColorA(0x50b6aa, 0.9)]; //IBHexColorA(0x21e2aa, 0.7) 24D9CF
-    UIImageView *logoImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"icon_default_user"]];
-    logoImageView.frame = CGRectMake(0, 0, 80, 80);
+    // d0e765, 33aab4
+    IBWaterWaveView *waveView = [[IBWaterWaveView alloc] initWithFrame:headerView.bounds startColor:IBHexColorA(0xd0e765, 0.3) endColor:IBHexColorA(0x33aab4, 0.9)];
+    UIImageView *logoImageView = [[UIImageView alloc] initWithImage:[self reloadImage]];
+    logoImageView.frame = CGRectMake(0, 0, 90, 90);
     logoImageView.center = CGPointMake(headerView.mj_w*0.5, headerView.mj_h*0.5);
+    logoImageView.layer.cornerRadius = 45.0;
+    logoImageView.layer.borderWidth = 3.0;
+    logoImageView.layer.borderColor = [UIColor colorBoardLineColor].CGColor;
+    logoImageView.layer.masksToBounds = YES;
     [headerView addSubview:waveView];
     [headerView addSubview:logoImageView];
     self.tableView.tableHeaderView = headerView;
@@ -149,7 +153,8 @@ static NSString *const kMineCellReuseIdentifier = @"kMineCellReuseIdentifier";
 
 - (void)updateObjects
 {
-    self.userNameLabel.text = [self reloadName];
+    self.userNameLabel.text  = [self reloadName];
+    self.logoImageView.image = [self reloadImage];
     [self.loginButton setTitle:[self reloadLogon] forState:UIControlStateNormal];
 }
 
@@ -161,6 +166,17 @@ static NSString *const kMineCellReuseIdentifier = @"kMineCellReuseIdentifier";
 - (NSString *)reloadName {
     
     return [CacheManager sharedManager].isLogon ? @"FunOnline235" : @"";
+}
+
+- (UIImage *)reloadImage
+{
+    UIImage *logoImage = nil;
+    if ([CacheManager sharedManager].isLogon) {
+        logoImage = [UIImage imageNamed:@"mine_exist_logo"];
+    }else {
+        logoImage = [UIImage imageNamed:@"icon_default_avatar"];
+    }
+    return logoImage;
 }
 
 #pragma mark - TableView for data

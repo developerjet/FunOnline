@@ -247,12 +247,43 @@ static NSString *const kMusicClassesHeaderIdentifier = @"kMusicClassesHeaderIden
     return 50;
 }
 
+#pragma mark - <DZNEmptyDataSetSource>
+- (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView {
+    
+    return [UIImage imageNamed:@"icon_loading_image"];
+}
+
+- (NSAttributedString *)buttonTitleForEmptyDataSet:(UIScrollView *)scrollView forState:(UIControlState)state {
+    NSString *buttonTitle = @"请点击重试哟~";
+    NSDictionary *attributes = @{
+                                 NSFontAttributeName:[UIFont boldSystemFontOfSize:17.0f],
+                                 NSForegroundColorAttributeName: [UIColor colorThemeColor]
+                                 };
+    return [[NSAttributedString alloc] initWithString:buttonTitle attributes:attributes];
+}
+
 #pragma mark - <DZNEmptyDataSetDelegate>
 - (void)emptyDataSet:(UIScrollView *)scrollView didTapButton:(UIButton *)button {
     WeakSelf;
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.25 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         
-        [weakSelf.groupTable.mj_header beginRefreshing];
+        [weakSelf restRefresh];
     });
 }
+
+- (void)restRefresh {
+    
+    if (![self.groupTable.mj_header isRefreshing]) {
+        [self.groupTable.mj_header beginRefreshing];
+    }
+    if (![self.groupTable.mj_header isRefreshing]) {
+        [self.groupTable.mj_header beginRefreshing];
+    }
+}
+
+- (CGFloat)verticalOffsetForEmptyDataSet:(UIScrollView *)scrollView {
+    
+    return SCREEN_HEIGHT * 0.2;
+}
+
 @end

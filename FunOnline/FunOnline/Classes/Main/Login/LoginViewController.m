@@ -43,7 +43,7 @@
     loginButton.layer.borderColor = [UIColor colorWhiteColor].CGColor;
     loginButton.layer.borderWidth = 1.5;
     loginButton.layer.masksToBounds = YES;
-    [loginButton addTarget:self action:@selector(confirmLogin) forControlEvents:UIControlEventTouchUpInside];
+    [loginButton addTarget:self action:@selector(LogonIn) forControlEvents:UIControlEventTouchUpInside];
     self.loginButton = loginButton;
     
     UILabel *titleLabel = [[UILabel alloc] init];
@@ -86,9 +86,9 @@
 }
 
 
-#pragma mark - Logon actions
+#pragma mark - Logon action
 
-- (void)confirmLogin {
+- (void)LogonIn {
     [XDProgressHUD showHUDWithIndeterminate:@"Login..."];
     
     WeakSelf;
