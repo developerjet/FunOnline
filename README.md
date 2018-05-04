@@ -1,15 +1,9 @@
 # FunOnline
 
------ 
-一款集壁纸、音乐、新闻资讯的多玩Apps，欢迎大家Star和lssues。
-
------ 
-示图：
-![image](https://github.com/tj812215542/FunOnline/blob/master/FunOnline/ScreenImages/home.png)
-![image](https://github.com/tj812215542/FunOnline/blob/master/FunOnline/ScreenImages/news.png)
-![image](https://github.com/tj812215542/FunOnline/blob/master/FunOnline/ScreenImages/music1.png)
-![image](https://github.com/tj812215542/FunOnline/blob/master/FunOnline/ScreenImages/music2.png)
-![image](https://github.com/tj812215542/FunOnline/blob/master/FunOnline/ScreenImages/music2.png)
+## 一款集壁纸、音乐、新闻资讯的多玩Apps，欢迎大家Star和lssues。
+ 
+ ### 示图：
+![image](https://github.com/tj812215542/FunOnline/blob/master/FunOnline/ScreenImages/home.png) ![image](https://github.com/tj812215542/FunOnline/blob/master/FunOnline/ScreenImages/news.png) ![image](https://github.com/tj812215542/FunOnline/blob/master/FunOnline/ScreenImages/music1.png) ![image](https://github.com/tj812215542/FunOnline/blob/master/FunOnline/ScreenImages/music2.png) ![image](https://github.com/tj812215542/FunOnline/blob/master/FunOnline/ScreenImages/music2.png)
 
 ---- 
 主要功能
