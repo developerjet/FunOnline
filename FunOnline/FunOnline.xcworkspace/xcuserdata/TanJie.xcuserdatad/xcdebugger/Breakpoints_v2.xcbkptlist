@@ -2,4 +2,101 @@
 <Bucket
    type = "0"
    version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "FunOnline/Classes/Main/News/Controller/NewsViewController.m"
+            timestampString = "547139442.7767889"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "127"
+            endingLineNumber = "127"
+            landmarkName = "-showRefreshing:"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[NewsViewController showRefreshing:]"
+                  moduleName = "FunOnline"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/tanjie/Desktop/iOSLearn/GitHubDesktop/FunOnline/FunOnline/FunOnline/Classes/Main/News/Controller/NewsViewController.m"
+                  timestampString = "547139177.301465"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "127"
+                  endingLineNumber = "127"
+                  offsetFromSymbolStart = "188">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__37-[NewsViewController showRefreshing:]_block_invoke"
+                  moduleName = "FunOnline"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/tanjie/Desktop/iOSLearn/GitHubDesktop/FunOnline/FunOnline/FunOnline/Classes/Main/News/Controller/NewsViewController.m"
+                  timestampString = "547139177.304355"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "127"
+                  endingLineNumber = "127"
+                  offsetFromSymbolStart = "24">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__destroy_helper_block_.207"
+                  moduleName = "FunOnline"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/tanjie/Desktop/iOSLearn/GitHubDesktop/FunOnline/FunOnline/FunOnline/Classes/Main/News/Controller/NewsViewController.m"
+                  timestampString = "547139177.307085"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "127"
+                  endingLineNumber = "127"
+                  offsetFromSymbolStart = "20">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "FunOnline/Classes/Main/News/Controller/NewsViewController.m"
+            timestampString = "547139442.7769459"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "128"
+            endingLineNumber = "128"
+            landmarkName = "-showRefreshing:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "FunOnline/Classes/Main/News/Controller/NewsViewController.m"
+            timestampString = "547139442.7770489"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "129"
+            endingLineNumber = "129"
+            landmarkName = "-showRefreshing:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
 </Bucket>
