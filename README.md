@@ -7,7 +7,8 @@
 ![image](https://github.com/tj812215542/FunOnline/blob/master/FunOnline/ScreenImages/news.png)
 ![image](https://github.com/tj812215542/FunOnline/blob/master/FunOnline/ScreenImages/music1.png)
 ![image](https://github.com/tj812215542/FunOnline/blob/master/FunOnline/ScreenImages/music2.png)
-![image](https://github.com/tj812215542/FunOnline/blob/master/FunOnline/ScreenImages/music2.png)
+![image](https://github.com/tj812215542/FunOnline/blob/master/FunOnline/ScreenImages/music3.png)
+![image](https://github.com/tj812215542/FunOnline/blob/master/FunOnline/ScreenImages/mine.png)
 
 ### 主要功能
 * 首页支持大量壁纸阅览，壁纸搜索，本地壁纸内容收藏等<br>
