@@ -103,7 +103,7 @@ static NSString *const kNewsCellReuseIdentifier = @"kNewsCellReuseIdentifier";
     [self addRightSwipGesture:self.tableView];
     
     WeakSelf;
-    self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+    self.tableView.mj_header = [FLRefreshGifHeader headerWithRefreshingBlock:^{
         weakSelf.count = 16;
         [weakSelf showRefreshing:weakSelf.count];
     }];

@@ -22,7 +22,7 @@
     if (self = [super initWithFrame:frame]) {
         self.backgroundColor = [UIColor clearColor];
         
-        _cycleScrollView = [SDCycleScrollView cycleScrollViewWithFrame:self.bounds delegate:self placeholderImage:[UIImage imageNamed:@"icon_onnetwork_image"]];
+        _cycleScrollView = [SDCycleScrollView cycleScrollViewWithFrame:self.bounds delegate:self placeholderImage:[UIImage imageNamed:@"icon_banner_placeholder"]];
         _cycleScrollView.pageDotColor = [UIColor whiteColor];
         _cycleScrollView.currentPageDotColor = [UIColor colorThemeColor];
         _cycleScrollView.pageControlStyle = SDCycleScrollViewPageContolStyleClassic;

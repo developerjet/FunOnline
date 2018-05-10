@@ -53,7 +53,7 @@ static NSString *const kNewsFavoriteCellIdentifier = @"kNewsFavoriteCellIdentifi
 - (void)reloadTable
 {
     WeakSelf;
-    self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+    self.tableView.mj_header = [FLRefreshGifHeader headerWithRefreshingBlock:^{
         
         [weakSelf loadingCaches];
     }];

@@ -38,6 +38,8 @@
 
 /** 通知相关 */
 #define NC  [NSNotificationCenter defaultCenter]
+#define NC_Reload_Home      @"NC_Reload_Home"
+#define NC_Reload_Music     @"NC_Reload_Music"
 #define NC_Reload_News      @"NS_Reload_News"
 #define NC_Reload_Picture   @"NS_Reload_Picture"
 

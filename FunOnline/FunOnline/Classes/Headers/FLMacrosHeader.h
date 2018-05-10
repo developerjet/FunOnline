@@ -13,9 +13,9 @@
 #import "RequestHeaders.h"
 #import "FLEnumsHeader.h"
 
+#import "FLRefreshGifHeader.h"
 #import <AFNetworking.h>
 #import <MJExtension.h>
-#import <MJRefresh.h>
 #import <LEEAlert.h>
 #import <Masonry.h>
 

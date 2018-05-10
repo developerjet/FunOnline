@@ -89,6 +89,19 @@
     
     self.collectionView.emptyDataSetSource   = self;
     self.collectionView.emptyDataSetDelegate = self;
+    
+    [NC addObserver:self selector:@selector(recoverRefresh) name:NC_Reload_Home object:nil];
+    [NC addObserver:self selector:@selector(recoverRefresh) name:NC_Reload_Music object:nil];
+}
+
+- (void)recoverRefresh
+{
+    if (![self.tableView.mj_header isRefreshing]) {
+        [self.tableView.mj_header beginRefreshing];
+    }
+    if (![self.collectionView.mj_header isRefreshing]) {
+        [self.collectionView.mj_header beginRefreshing];
+    }
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
@@ -174,6 +187,14 @@
         frame.origin.y = [UIScreen mainScreen].bounds.size.height - 83;
         self.tabBarController.tabBar.frame = frame;
     }
+}
+
+#pragma mark - dealloc
+
+- (void)dealloc
+{
+    [NC removeObserver:self name:NC_Reload_Home object:nil];
+    [NC removeObserver:self name:NC_Reload_Music object:nil];
 }
 
 @end

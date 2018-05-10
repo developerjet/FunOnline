@@ -104,14 +104,14 @@ static NSString *const kMineCellReuseIdentifier = @"kMineCellReuseIdentifier";
     CGFloat height = iPhoneX ? (SCREEN_HEIGHT - 83) : (SCREEN_HEIGHT - 49);
     self.tableView.frame = CGRectMake(0, 0, SCREEN_WIDTH, height);
     [self.tableView registerNib:[UINib nibWithNibName:@"MineTableViewCell" bundle:nil] forCellReuseIdentifier:kMineCellReuseIdentifier];
-    self.tableView.tableFooterView = [self defaultSetFooter];
+    self.tableView.tableFooterView = [self defaultFooter];
     
     self.tableView.backgroundColor = [UIColor clearColor];
     self.tableView.separatorStyle  = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:self.tableView];
 }
 
-- (UIView *)defaultSetFooter
+- (UIView *)defaultFooter
 {
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 44)];
     view.backgroundColor = [UIColor colorWhiteColor];
@@ -272,7 +272,7 @@ static NSString *const kMineCellReuseIdentifier = @"kMineCellReuseIdentifier";
 {
     [LEEAlert alert].config
     .LeeTitle(@"温馨提示")
-    .LeeContent(@"应用上架AppStore后，就可以评论了哟")
+    .LeeContent(@"此功能占位开放")
     .LeeAction(@"OK", ^{
         
     })

@@ -67,30 +67,13 @@ static NSString *const kSearchResultIdentifier = @"kSearchResultIdentifier";
     [self.view addSubview:self.collectionView];
     
     WeakSelf;
-    self.collectionView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+    self.collectionView.mj_header = [FLRefreshGifHeader headerWithRefreshingBlock:^{
         
         [weakSelf loadingResult];
     }];
     
     [self.collectionView.mj_header beginRefreshing];
 }
-
-/*
-- (void)afterTagat {
-    
-    for (UIViewController *controller in self.navigationController.viewControllers) {
-        if ([controller isKindOfClass:[SearchHistoryViewController class]]) {
-            SearchHistoryViewController *revise = (SearchHistoryViewController *)controller;
-            [self.navigationController popToViewController:revise animated:YES];
-            return;
-        }else {
-            SearchHistoryViewController *revise = (SearchHistoryViewController *)controller;
-            //BasicNavigationController *nav = [[BasicNavigationController alloc] initWithRootViewController:revise];
-            [self.navigationController popToViewController:revise animated:YES];
-        }
-    }
-}
- */
 
 - (void)loadingResult
 {

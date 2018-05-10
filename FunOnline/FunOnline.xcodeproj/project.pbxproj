@@ -86,6 +86,7 @@
 		2B435FFD207C86930040420A /* NewsFavoriteController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B435FFC207C86930040420A /* NewsFavoriteController.m */; };
 		2B49F93E20849CC5003F674C /* IBWaterWaveView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B49F93D20849CC5003F674C /* IBWaterWaveView.m */; };
 		2B75493620750B54006B59B8 /* NSString+Estend.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B75493520750B54006B59B8 /* NSString+Estend.m */; };
+		2BC7EA7520A46EC7009FD3BC /* FLRefreshGifHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BC7EA7420A46EC7009FD3BC /* FLRefreshGifHeader.m */; };
 		2BE3F8402086DA0A003157EA /* MusicPlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BE3F83E2086DA0A003157EA /* MusicPlayerViewController.m */; };
 		2BE3F8412086DA0A003157EA /* MusicPlayerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2BE3F83F2086DA0A003157EA /* MusicPlayerViewController.xib */; };
 		2BE3F8452087096B003157EA /* RotateImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BE3F8442087096B003157EA /* RotateImageView.m */; };
@@ -273,6 +274,8 @@
 		2B49F93D20849CC5003F674C /* IBWaterWaveView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IBWaterWaveView.m; sourceTree = "<group>"; };
 		2B75493420750B54006B59B8 /* NSString+Estend.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Estend.h"; sourceTree = "<group>"; };
 		2B75493520750B54006B59B8 /* NSString+Estend.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Estend.m"; sourceTree = "<group>"; };
+		2BC7EA7320A46EC7009FD3BC /* FLRefreshGifHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLRefreshGifHeader.h; sourceTree = "<group>"; };
+		2BC7EA7420A46EC7009FD3BC /* FLRefreshGifHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLRefreshGifHeader.m; sourceTree = "<group>"; };
 		2BE3F83D2086DA0A003157EA /* MusicPlayerViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MusicPlayerViewController.h; sourceTree = "<group>"; };
 		2BE3F83E2086DA0A003157EA /* MusicPlayerViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MusicPlayerViewController.m; sourceTree = "<group>"; };
 		2BE3F83F2086DA0A003157EA /* MusicPlayerViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MusicPlayerViewController.xib; sourceTree = "<group>"; };
@@ -375,6 +378,7 @@
 			children = (
 				04DEDF972090588A006DFF63 /* CachesManager */,
 				04DEDF9A2090588A006DFF63 /* RequestManager */,
+				2BC7EA7220A46EC7009FD3BC /* FLHeaderRefresh */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -836,6 +840,15 @@
 			path = IBWaterWaveView;
 			sourceTree = "<group>";
 		};
+		2BC7EA7220A46EC7009FD3BC /* FLHeaderRefresh */ = {
+			isa = PBXGroup;
+			children = (
+				2BC7EA7320A46EC7009FD3BC /* FLRefreshGifHeader.h */,
+				2BC7EA7420A46EC7009FD3BC /* FLRefreshGifHeader.m */,
+			);
+			path = FLHeaderRefresh;
+			sourceTree = "<group>";
+		};
 		2BD20C962080563E005E70EF /* Music */ = {
 			isa = PBXGroup;
 			children = (
@@ -1173,6 +1186,7 @@
 				2B00345F20746CB3003C5213 /* HasNavViewController.m in Sources */,
 				2B00348820746E40003C5213 /* UIImage+Extension.m in Sources */,
 				2B02954C207EED4B001FBA88 /* WallPaperCollectionCell.m in Sources */,
+				2BC7EA7520A46EC7009FD3BC /* FLRefreshGifHeader.m in Sources */,
 				2B029559207F1902001FBA88 /* FeedBackDropMenu.m in Sources */,
 				2B02955E207F6083001FBA88 /* FeedBackPhotoCell.m in Sources */,
 				2B435FF0207C63880040420A /* MineModel.m in Sources */,

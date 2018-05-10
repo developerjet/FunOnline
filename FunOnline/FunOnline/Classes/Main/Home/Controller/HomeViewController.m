@@ -17,8 +17,10 @@
 @property (nonatomic, strong) NSArray *titleGroup;
 /** 子控制器 */
 @property (nonatomic, strong) NSArray *childenGroup;
-
+/** 顶部菜单选项 */
 @property (nonatomic, strong) LKSegmentItemBar *segmentItem;
+/** 记录点击的索引 */
+@property (nonatomic, assign) NSInteger scrollRecord;
 
 @end
 
@@ -55,6 +57,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.title = @"壁纸";
+    self.scrollRecord = 0;
     
     [self initNavitem];
     [self initSubview];
@@ -94,6 +97,10 @@
     self.segmentItem.didFinishedBlock = ^(NSInteger index) {
         CGPoint point = CGPointMake(index * self.mainScrollView.frame.size.width, weakSelf.mainScrollView.contentOffset.y);
         [weakSelf.mainScrollView setContentOffset:point animated:YES];
+        if (weakSelf.scrollRecord == index) {
+            [NC postNotificationName:NC_Reload_Home object:nil];
+        }
+        weakSelf.scrollRecord = index;
     };
 }
 

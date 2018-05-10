@@ -203,6 +203,9 @@ TZImagePickerControllerDelegate, FeedBackDropMenuDelegate>
     
     if (indexPath.row == self.photoObjects.count-1) {
         if (self.isVisibleAdds) {
+            if (self.photoObjects.count == 1) {
+                [self showAddSheet];
+            }
             [self showAddSheet];
         }else {
             [self showMoreSheet];

@@ -78,7 +78,7 @@ static NSString *const kWallpaperHeaderIdentifier = @"kWallpaperHeaderIdentifier
     [self.view addSubview:self.collectionView];
     
     WeakSelf;
-    self.collectionView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+    self.collectionView.mj_header = [FLRefreshGifHeader headerWithRefreshingBlock:^{
         
         [weakSelf loadHotObject];
     }];

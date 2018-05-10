@@ -51,7 +51,7 @@ static NSString *const kClassifyReuseIdentifier = @"kClassifyReuseIdentifier";
     [self.view addSubview:self.collectionView];
     
     WeakSelf;
-    self.collectionView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+    self.collectionView.mj_header = [FLRefreshGifHeader headerWithRefreshingBlock:^{
         
         [weakSelf loadClassify];
     }];

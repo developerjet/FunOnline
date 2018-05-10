@@ -213,10 +213,10 @@ static NSString *const kPlayListCellIdentifier = @"kPlayListCellIdentifier";
                 }
             }else {
                 [self.playerVC show];
-                self.isPlaying = YES;
             }
         }else {
             [self.playerVC show];
+            self.isPlaying = YES;
         }
         
         _currentIndex = indexPath.row;

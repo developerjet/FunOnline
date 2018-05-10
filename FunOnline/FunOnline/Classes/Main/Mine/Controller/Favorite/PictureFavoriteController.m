@@ -57,7 +57,7 @@ static NSString *const kPictureCellReuseIdentifier = @"kPictureCellReuseIdentifi
 - (void)showRefresh
 {
     WeakSelf;
-    self.collectionView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+    self.collectionView.mj_header = [FLRefreshGifHeader headerWithRefreshingBlock:^{
         
         [weakSelf loadingPicture];
     }];

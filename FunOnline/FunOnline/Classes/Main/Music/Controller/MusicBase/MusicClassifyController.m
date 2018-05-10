@@ -68,7 +68,7 @@ static NSString *const kMusicClassifyCellIdentifier = @"kMusicClassifyCellIdenti
     [self.view addSubview:self.tableView];
     
     WeakSelf;
-    self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+    self.tableView.mj_header = [FLRefreshGifHeader headerWithRefreshingBlock:^{
         
         [weakSelf loadClassifys];
     }];

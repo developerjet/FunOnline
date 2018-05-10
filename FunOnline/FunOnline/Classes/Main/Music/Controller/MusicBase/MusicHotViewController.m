@@ -88,7 +88,7 @@ static NSString *const kMusicClassesHeaderIdentifier = @"kMusicClassesHeaderIden
         self.carouselView.delegate = self;
         self.carouselView.cornerRadius = 5;
         self.carouselView.autoScrollTime = 0.2;
-        self.carouselView.placeholder = @"icon_loading_image";
+        self.carouselView.placeholder = @"icon_banner_placeholder";
         [view addSubview:self.carouselView];
         view;
     });
@@ -99,7 +99,7 @@ static NSString *const kMusicClassesHeaderIdentifier = @"kMusicClassesHeaderIden
 - (void)addRefreshing {
     
     WeakSelf;
-    self.groupTable.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+    self.groupTable.mj_header = [FLRefreshGifHeader headerWithRefreshingBlock:^{
         
         [weakSelf loadRecommend];
     }];
@@ -115,6 +115,15 @@ static NSString *const kMusicClassesHeaderIdentifier = @"kMusicClassesHeaderIden
     }
     if ([self.groupTable.mj_footer isRefreshing]) {
         [self.groupTable.mj_footer endRefreshing];
+    }
+}
+
+// 重写父类方法
+- (void)recoverRefresh {
+    [super recoverRefresh];
+    
+    if (![self.groupTable.mj_header isRefreshing]) {
+        [self.groupTable.mj_header beginRefreshing];
     }
 }
 

@@ -17,6 +17,8 @@
 @property (nonatomic, strong) LKSegmentItemBar *segmenItemView;
 @property (nonatomic, strong) UIScrollView     *subViewScroll;
 
+@property (nonatomic, assign) NSInteger        currentIndex;
+
 @end
 
 @implementation MusicBaseViewController
@@ -48,6 +50,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
+    _currentIndex = 0;
     [self initNavItem];
     [self initSubview];
 }
@@ -121,6 +124,11 @@
 {
     CGPoint point = CGPointMake(index * self.subViewScroll.frame.size.width, self.subViewScroll.contentOffset.y);
     [self.subViewScroll setContentOffset:point animated:YES];
+    
+    if (_currentIndex == index) {
+        [NC postNotificationName:NC_Reload_Music object:nil];
+    }
+    _currentIndex = index;
 }
 
 @end

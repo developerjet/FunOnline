@@ -63,7 +63,7 @@ static NSString *const kDetailCellReuseIdentifier = @"kDetailCellReuseIdentifier
     [self.view addSubview:self.collectionView];
     
     WeakSelf;
-    self.collectionView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+    self.collectionView.mj_header = [FLRefreshGifHeader headerWithRefreshingBlock:^{
         weakSelf.page = 1;
         [weakSelf loadingDetail:weakSelf.page];
     }];

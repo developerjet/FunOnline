@@ -41,6 +41,11 @@ DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, CustomViewLayoutDelegate>
 - (void)endRefreshing;
 
 /**
+ *  再次头部刷新
+ */
+- (void)recoverRefresh;
+
+/**
  * 上下拉刷新处理(子类可重写)
  *
  * @param page 页码

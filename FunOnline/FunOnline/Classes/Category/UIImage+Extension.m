@@ -129,6 +129,50 @@
     return img;
 }
 
+- (UIImage *)imageByScalingToSize:(CGSize)targetSize
+{
+    UIImage *sourceImage = self;
+    UIImage *newImage = nil;
+    CGSize imageSize = sourceImage.size;
+    CGFloat width = imageSize.width;
+    CGFloat height = imageSize.height;
+    CGFloat targetWidth = targetSize.width;
+    CGFloat targetHeight = targetSize.height;
+    CGFloat scaleFactor = 0.0;
+    CGFloat scaledWidth = targetWidth;
+    CGFloat scaledHeight = targetHeight;
+    CGPoint thumbnailPoint = CGPointMake(0.0,0.0);
+    if (CGSizeEqualToSize(imageSize, targetSize) == NO) {
+        CGFloat widthFactor = targetWidth / width;
+        CGFloat heightFactor = targetHeight / height;
+        if (widthFactor < heightFactor)
+            scaleFactor = widthFactor;
+        else
+            scaleFactor = heightFactor;
+        scaledWidth  = width * scaleFactor;
+        scaledHeight = height * scaleFactor;
+        // center the image
+        if (widthFactor < heightFactor) {
+            
+            thumbnailPoint.y = (targetHeight - scaledHeight) * 0.5;
+        } else if (widthFactor > heightFactor) {
+            thumbnailPoint.x = (targetWidth - scaledWidth) * 0.5;
+        }
+    }
+    // this is actually the interesting part:
+    UIGraphicsBeginImageContext(targetSize);
+    CGRect thumbnailRect = CGRectZero;
+    thumbnailRect.origin = thumbnailPoint;
+    thumbnailRect.size.width  = scaledWidth;
+    thumbnailRect.size.height = scaledHeight;
+    [sourceImage drawInRect:thumbnailRect];
+    newImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    if(newImage == nil)
+        NSLog(@"could not scale image");
+    return newImage ;
+}
+
 - (UIImage *)imageToMaxImage:(CGSize)maxSize
 {
     CGSize size = self.size;
@@ -166,6 +210,7 @@
     UIImage *img = [UIImage imageWithImageSimple:self scaledToSize:CGSizeMake(width, height)];
     return img;
 }
+
 /**
  *  按照viewsize 对图片进行等比缩放
  *
@@ -241,70 +286,7 @@
     return @[bigImage,smallImage];
 }
 
--(id)diskImageDataBySearchingAllPathsForKey:(id)key{return nil;}
-
-//+(CGSize)downloadImageSizeWithURL:(id)imageURL
-//{
-//    NSURL* URL = nil;
-//    if([imageURL isKindOfClass:[NSURL class]]){
-//        URL = imageURL;
-//    }
-//    if([imageURL isKindOfClass:[NSString class]]){
-//        URL = [NSURL URLWithString:imageURL];
-//    }
-//    if(URL == nil)
-//        return CGSizeZero;
-//
-//    NSString* absoluteString = URL.absoluteString;
-
-//    if([[SDImageCache sharedImageCache] diskImageExistsWithKey:absoluteString])
-//    {
-//        UIImage* image = [[SDImageCache sharedImageCache] imageFromMemoryCacheForKey:absoluteString];
-//        if(!image)
-//        {
-//            NSData* data = [[SDImageCache sharedImageCache] performSelector:@selector(diskImageDataBySearchingAllPathsForKey:) withObject:URL.absoluteString];
-//
-//            //            NSData *data = [[SDImageCache sharedImageCache] diskImageDataBySearchingAllPathsForKey:URL.absoluteString];
-//            image = [UIImage imageWithData:data];
-//        }
-//        if(image)
-//        {
-//            return image.size;
-//        }
-//        else {
-//            return CGSizeMake(220, 220);
-//        }
-//    }
-//    else {
-//        return CGSizeMake(220, 220);
-//    }
-    
-    //    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:URL];
-    //    NSString* pathExtendsion = [URL.pathExtension lowercaseString];
-    //
-    //    CGSize size = CGSizeZero;
-    //    if([pathExtendsion isEqualToString:@"png"]){
-    //        size =  [self downloadPNGImageSizeWithRequest:request];
-    //    }
-    //    else if([pathExtendsion isEqual:@"gif"])
-    //    {
-    //        size =  [self downloadGIFImageSizeWithRequest:request];
-    //    }
-    //    else{
-    //        size = [self downloadJPGImageSizeWithRequest:request];
-    //    }
-    //    if(CGSizeEqualToSize(CGSizeZero, size))
-    //    {
-    //        NSData* data = [NSURLConnection sendSynchronousRequest:[NSURLRequest requestWithURL:URL] returningResponse:nil error:nil];
-    //        UIImage* image = [UIImage imageWithData:data];
-    //        if(image)
-    //        {
-    //            [[SDImageCache sharedImageCache] storeImage:image recalculateFromImage:YES imageData:data forKey:URL.absoluteString toDisk:YES];
-    //            size = image.size;
-    //        }
-    //    }
-    //    return size;
-//}
+- (id)diskImageDataBySearchingAllPathsForKey:(id)key{return nil;}
 
 +(CGSize)downloadPNGImageSizeWithRequest:(NSMutableURLRequest*)request
 {
