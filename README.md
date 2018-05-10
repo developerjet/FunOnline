@@ -2,7 +2,7 @@
 
 ## 一款集壁纸、音乐、新闻资讯的多玩Apps，欢迎大家Star和lssues我。
  
- ### 示图：
+ ### Examples
 ![image](https://github.com/tj812215542/FunOnline/blob/master/FunOnline/ScreenImages/home.png) 
 ![image](https://github.com/tj812215542/FunOnline/blob/master/FunOnline/ScreenImages/news.png)
 ![image](https://github.com/tj812215542/FunOnline/blob/master/FunOnline/ScreenImages/music1.png)
@@ -16,4 +16,6 @@
 * 音库模块为你推荐当下最热门的歌曲和不同的歌曲类型，炫酷音乐播放界面和功能<br>
 * 后续功能继续完善中....<br>
 
-喜欢的朋友麻烦点个Star，谢谢。
+### 项目遵从Licensed under the MIT licens.开源协议
+* 希望大家切勿私自拿该项目去appStore上架作为商业用途，否则必将追究相关法律及侵权责任<br>
+* 喜欢的朋友麻烦点个Star，非常感谢<br>
