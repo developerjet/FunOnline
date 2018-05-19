@@ -10,14 +10,17 @@
 #import "MusicPlayerViewController.h"
 #import "MusicPlayManagerBar.h"
 #import "MusicMoreListCell.h"
+#import "FLCycleNavMenu.h"
 #import "MusciDropMenu.h"
 
+static CGFloat  kPointHeight = 158.f;
 static NSString *const kPlayListCellIdentifier = @"kPlayListCellIdentifier";
 
 @interface MusicPlayListController ()<MusicPlayerControllerDelegate, MusicPlayBarDelegate>
 @property (nonatomic, strong) MusicPlayerViewController *playerVC;
 @property (nonatomic, strong) MusicPlayManagerBar       *playBar;
 @property (nonatomic, strong) NSMutableArray            *playItems;
+@property (nonatomic, strong) FLCycleNavMenu            *cycleNavMenu;
 @property (nonatomic, strong) MusciDropMenu             *dropMenu;
 @property (nonatomic, assign) PlayerBackState            playState;
 @property (nonatomic, assign) BOOL                       isPlaying;
@@ -86,8 +89,13 @@ static NSString *const kPlayListCellIdentifier = @"kPlayListCellIdentifier";
     [self.view addSubview:self.tableView];
     
     WeakSelf;
+    self.cycleNavMenu = [[FLCycleNavMenu alloc] init];
+    [self.view addSubview:self.cycleNavMenu];
+    self.cycleNavMenu.backDidFinishedBlock = ^{
+        [weakSelf.navigationController popViewControllerAnimated:YES];
+    };
+    
     self.dropMenu.backDidBlock = ^{
-
         [weakSelf.navigationController popViewControllerAnimated:YES];
     };
 }
@@ -122,6 +130,7 @@ static NSString *const kPlayListCellIdentifier = @"kPlayListCellIdentifier";
         if ([responseObj[@"msg"] integerValue] == 0) {
             AlbumModel *album = [AlbumModel mj_objectWithKeyValues:responseObj[@"album"]];
             self.dropMenu.album = album;
+            self.cycleNavMenu.item = album;
             
             NSArray *newObjects = responseObj[@"tracks"][@"list"];
             [self.playItems addObjectsFromArray:[MusicPlayModel mj_objectArrayWithKeyValuesArray:newObjects]];
@@ -230,19 +239,16 @@ static NSString *const kPlayListCellIdentifier = @"kPlayListCellIdentifier";
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     CGFloat offsetY = scrollView.contentOffset.y;
-    CGFloat newHeight = 0;
-    if (offsetY > self.view.frame.size.height-158) {
-        [self.navigationController setNavigationBarHidden:NO animated:YES];
-        newHeight = iPhoneX ? SCREEN_HEIGHT-88-60 : SCREEN_HEIGHT-64-60;
-    }else {
-        [self.navigationController setNavigationBarHidden:YES animated:YES];
-        newHeight = SCREEN_HEIGHT - 60;
-    }
     
-    dispatch_async(dispatch_get_main_queue(), ^{
-        
-        self.tableView.mj_h = newHeight;
-    });
+    if (offsetY < kPointHeight) { // 0~1 => 0/headHeight ~ headHeight/headHeight
+        _cycleNavMenu.showTools = NO;
+        _cycleNavMenu.titleColor = [UIColor colorWhiteColor];
+        _cycleNavMenu.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:offsetY/kPointHeight];
+    }else {
+        _cycleNavMenu.showTools = YES;
+        _cycleNavMenu.titleColor = [UIColor colorWhiteColor];
+        _cycleNavMenu.backgroundColor = [[UIColor colorThemeColor] colorWithAlphaComponent:offsetY/kPointHeight];
+    }
 }
 
 

@@ -7,6 +7,8 @@
 //
 
 #import "WallPaperCollectionCell.h"
+#import "UIImageView+SDWebImage.h"
+#import "UIColor+Extension.h"
 
 @interface WallPaperCollectionCell()
 @property (nonatomic, strong) UIImageView *elevationImgView;

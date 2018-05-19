@@ -170,6 +170,7 @@
 
 #pragma mark - network state
 - (void)startNetState {
+    __block BOOL isStatus = NO;
     
     // 开启网络指示器
     AFNetworkReachabilityManager *manager = [AFNetworkReachabilityManager sharedManager];
@@ -188,15 +189,19 @@
                 
             case AFNetworkReachabilityStatusReachableViaWWAN:
                 //[XDHub showSuccessWithStatus:@"已切换到3G|4G网络"];
+                isStatus = YES;
                 break;
                 
             case AFNetworkReachabilityStatusReachableViaWiFi:
                 //[XDHub showSuccessWithStatus:@"已连接到WiFi网络"];
+                isStatus = YES;
                 break;
                 
             default:
                 break;
         }
+        
+        NSLog(@"isStatus --- %@", isStatus ? @"YES": @"NO");
     }];
     
     [manager startMonitoring];

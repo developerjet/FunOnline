@@ -272,7 +272,7 @@ static NSString *const kMineCellReuseIdentifier = @"kMineCellReuseIdentifier";
 {
     [LEEAlert alert].config
     .LeeTitle(@"温馨提示")
-    .LeeContent(@"此功能占位开放")
+    .LeeContent(@"此功能暂未开放")
     .LeeAction(@"OK", ^{
         
     })

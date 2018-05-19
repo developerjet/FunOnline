@@ -41,6 +41,8 @@ static NSString *const kMusicClassesHeaderIdentifier = @"kMusicClassesHeaderIden
         _groupTable.separatorColor = [UIColor colorBoardLineColor];
         _groupTable.delegate = self;
         _groupTable.dataSource = self;
+        _groupTable.emptyDataSetSource   = self;
+        _groupTable.emptyDataSetDelegate = self;
         _groupTable.backgroundColor = [UIColor colorBackGroundColor];
         [_groupTable registerClass:[MusicClassHeaderView class] forHeaderFooterViewReuseIdentifier:kMusicClassesHeaderIdentifier];
         [_groupTable registerNib:[UINib nibWithNibName:@"MusicMoreListCell" bundle:nil] forCellReuseIdentifier:kMusicClassesCellIdentifier];

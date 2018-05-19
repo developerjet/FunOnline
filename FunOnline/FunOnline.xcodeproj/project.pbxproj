@@ -64,6 +64,7 @@
 		2B0BBDB8207B4D0D00CFF2E6 /* AppDelegate+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B0BBDB7207B4D0C00CFF2E6 /* AppDelegate+Utils.m */; };
 		2B1C16B82089C53A00E08904 /* MusicPlayingMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B1C16B72089C53A00E08904 /* MusicPlayingMenu.m */; };
 		2B1C16BC2089F36B00E08904 /* MusicPlayManagerBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B1C16BB2089F36B00E08904 /* MusicPlayManagerBar.m */; };
+		2B2054A420B02F8800877E14 /* FLCycleNavMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B2054A320B02F8800877E14 /* FLCycleNavMenu.m */; };
 		2B331F7F20859B9E0016EB9A /* MusicClassifyCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B331F7D20859B9E0016EB9A /* MusicClassifyCell.m */; };
 		2B331F8020859B9E0016EB9A /* MusicClassifyCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2B331F7E20859B9E0016EB9A /* MusicClassifyCell.xib */; };
 		2B331F832085A1370016EB9A /* MusicClassModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B331F822085A1370016EB9A /* MusicClassModel.m */; };
@@ -235,6 +236,8 @@
 		2B1C16B72089C53A00E08904 /* MusicPlayingMenu.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MusicPlayingMenu.m; sourceTree = "<group>"; };
 		2B1C16BA2089F36B00E08904 /* MusicPlayManagerBar.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MusicPlayManagerBar.h; sourceTree = "<group>"; };
 		2B1C16BB2089F36B00E08904 /* MusicPlayManagerBar.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MusicPlayManagerBar.m; sourceTree = "<group>"; };
+		2B2054A220B02F8800877E14 /* FLCycleNavMenu.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FLCycleNavMenu.h; sourceTree = "<group>"; };
+		2B2054A320B02F8800877E14 /* FLCycleNavMenu.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FLCycleNavMenu.m; sourceTree = "<group>"; };
 		2B331F7C20859B9E0016EB9A /* MusicClassifyCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MusicClassifyCell.h; sourceTree = "<group>"; };
 		2B331F7D20859B9E0016EB9A /* MusicClassifyCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MusicClassifyCell.m; sourceTree = "<group>"; };
 		2B331F7E20859B9E0016EB9A /* MusicClassifyCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MusicClassifyCell.xib; sourceTree = "<group>"; };
@@ -759,6 +762,15 @@
 			path = MusicPlayBar;
 			sourceTree = "<group>";
 		};
+		2B2054A120B02F6400877E14 /* FLCycleNavMenu */ = {
+			isa = PBXGroup;
+			children = (
+				2B2054A220B02F8800877E14 /* FLCycleNavMenu.h */,
+				2B2054A320B02F8800877E14 /* FLCycleNavMenu.m */,
+			);
+			path = FLCycleNavMenu;
+			sourceTree = "<group>";
+		};
 		2B331F952085DFE70016EB9A /* MusciDropMenu */ = {
 			isa = PBXGroup;
 			children = (
@@ -877,6 +889,7 @@
 			children = (
 				2B1C16B92089F33A00E08904 /* MusicPlayBar */,
 				2B331F952085DFE70016EB9A /* MusciDropMenu */,
+				2B2054A120B02F6400877E14 /* FLCycleNavMenu */,
 				046181EC2092C3A3006B8D03 /* InfiniteCarousel */,
 				2B331F7C20859B9E0016EB9A /* MusicClassifyCell.h */,
 				2B331F7D20859B9E0016EB9A /* MusicClassifyCell.m */,
@@ -1222,6 +1235,7 @@
 				2BE8D8E6207A17C900C522EA /* SDBrowserImageView.m in Sources */,
 				2B331F7F20859B9E0016EB9A /* MusicClassifyCell.m in Sources */,
 				2B02953E207EED4B001FBA88 /* CommentGroupCell.m in Sources */,
+				2B2054A420B02F8800877E14 /* FLCycleNavMenu.m in Sources */,
 				2B00345020746C47003C5213 /* AppDelegate.m in Sources */,
 				04DEDF9E2090588A006DFF63 /* RequestManager.m in Sources */,
 				2B331F832085A1370016EB9A /* MusicClassModel.m in Sources */,
