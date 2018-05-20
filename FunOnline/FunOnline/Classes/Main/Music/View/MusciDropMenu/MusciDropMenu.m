@@ -10,65 +10,144 @@
 
 @interface MusciDropMenu()
 
-@property (weak, nonatomic) IBOutlet UIVisualEffectView *effectView;
-@property (weak, nonatomic) IBOutlet UIImageView *screenImageView;
-@property (weak, nonatomic) IBOutlet UIImageView *coverImageView;
-@property (weak, nonatomic) IBOutlet UIImageView *avatarImageView;
-@property (weak, nonatomic) IBOutlet UIButton *playCountLabel;
-@property (weak, nonatomic) IBOutlet UILabel *nickNameLabel;
-@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
-@property (weak, nonatomic) IBOutlet UILabel *introLable;
-@property (weak, nonatomic) IBOutlet UILabel *tagsLabel;
+@property (nonatomic, strong) UILabel *tagsLabel;
+@property (nonatomic, strong) UILabel *nameLabel;
+@property (nonatomic, strong) UILabel *titleLabel;
+@property (nonatomic, strong) UILabel *introLable;
+@property (nonatomic, strong) UIButton *countButton;
+@property (nonatomic, strong) UIImageView *coverImageView;
+@property (nonatomic, strong) UIImageView *avatarImageView;
 
 @end
 
 @implementation MusciDropMenu
 
-+ (instancetype)loadNibDrop {
-    
-    return [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass(self) owner:nil options:nil] firstObject];
+#pragma mark - Life Cycle
+
+- (instancetype)init {
+    self = [super init];
+    if (self) {
+        self.backgroundColor = [UIColor clearColor];
+        [self configSubviews];
+        [self initConstraints];
+    }
+    return self;
 }
 
-#pragma mark - initialization
-
-- (void)awakeFromNib {
-    [super awakeFromNib];
-    
-    self.backgroundColor = COLORHEX(@"FFFFFF");
-    self.autoresizingMask = UIViewAutoresizingNone;
-    
-    [self configSubview];
+- (instancetype)initWithFrame:(CGRect)frame {
+    self = [super initWithFrame:frame];
+    if (self) {
+        self.backgroundColor = [UIColor clearColor];
+        [self configSubviews];
+        [self initConstraints];
+    }
+    return self;
 }
 
-- (void)configSubview
+- (void)configSubviews
 {
-    self.avatarImageView.layer.cornerRadius = 15.0;
-    self.avatarImageView.layer.masksToBounds = YES;
+    _titleLabel = [[UILabel alloc] init];
+    _titleLabel.textColor = [UIColor colorWhiteColor];
+    _titleLabel.font = [UIFont boldSystemFontOfSize:20];
+    _titleLabel.textAlignment = NSTextAlignmentCenter;
+    [self addSubview:_titleLabel];
     
-    // 设置毛玻璃效果
-    UIBlurEffect *blur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
-    [self.effectView setEffect:blur];
+    _coverImageView = [[UIImageView alloc] init];
+    _coverImageView.layer.borderWidth = 4.f;
+    _coverImageView.layer.borderColor = [UIColor colorBoardLineColor].CGColor;
+    _coverImageView.layer.shadowColor = [UIColor blackColor].CGColor;
+    _coverImageView.layer.shadowOffset = CGSizeMake(4,4);
+    _coverImageView.layer.shadowOpacity = 0.8f;
+    _coverImageView.layer.shadowRadius = 4.f;
+    [self addSubview:_coverImageView];
+    
+    _avatarImageView = [[UIImageView alloc] init];
+    [self addSubview:_avatarImageView];
+    
+    _nameLabel = [[UILabel alloc] init];
+    _nameLabel.font = [UIFont systemFontOfSize:17];
+    _nameLabel.textColor = [UIColor colorWhiteColor];
+    [self addSubview:_nameLabel];
+    
+    _introLable = [[UILabel alloc] init];
+    _introLable.font = [UIFont systemFontOfSize:17];
+    _introLable.textColor = [UIColor colorWhiteColor];
+    [self addSubview:_introLable];
+    
+    _tagsLabel = [[UILabel alloc] init];
+    _tagsLabel.font = [UIFont systemFontOfSize:17];
+    _tagsLabel.textColor = [UIColor colorWhiteColor];
+    [self addSubview:_tagsLabel];
+    
+    _countButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    _countButton.titleLabel.font = [UIFont systemFontOfSize:17];
+    [_countButton setImage:[UIImage imageNamed:@"icon_music_star"] forState:UIControlStateNormal];
+    [self.coverImageView addSubview:_countButton];
 }
 
-#pragma mark - Setter
+- (void)initConstraints
+{
+    [self.titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(self);
+        make.top.equalTo(self).offset(40);
+        make.left.equalTo(self).offset(50);
+        make.right.equalTo(self).offset(-50);
+    }];
+    
+    [self.coverImageView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.titleLabel.mas_bottom).offset(30);
+        make.left.equalTo(self).offset(15);
+        make.width.height.equalTo(@120);
+    }];
+    
+    [self.avatarImageView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.coverImageView.mas_right).offset(20);
+        make.width.height.equalTo(@30);
+        make.top.equalTo(self.coverImageView);
+    }];
+    
+    [self.nameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.avatarImageView.mas_right).offset(10);
+        make.centerY.equalTo(self.avatarImageView);
+        make.right.equalTo(self).offset(-15);
+    }];
+    
+    [self.introLable mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(self.coverImageView);
+        make.left.equalTo(self.avatarImageView);
+        make.right.equalTo(self.nameLabel);
+    }];
+    
+    [self.tagsLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(self.nameLabel);
+        make.left.equalTo(self.introLable);
+        make.bottom.equalTo(self.coverImageView);
+    }];
+    
+    [self.countButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(self.coverImageView);
+        make.bottom.equalTo(self.coverImageView);
+    }];
+}
+
+#pragma mark - Private Setter
 
 - (void)setAlbum:(AlbumModel *)album {
     _album = album;
-    
+
     self.titleLabel.text = album.title;
     self.introLable.text = album.intro;
-    self.nickNameLabel.text = album.nickname;
-    self.tagsLabel.text = album.tags ? album.tags : @"暂无简介";
+    self.nameLabel.text  = album.nickname;
+    self.tagsLabel.text  = album.tags.length > 0 ? album.tags : @"暂无简介";
     [self.coverImageView downloadImage:album.coverMiddle placeholder:@"icon_default_image"];
     [self.avatarImageView downloadImage:album.avatarPath placeholder:@"icon_default_avatar"];
-    [self.screenImageView downloadImage:album.coverOrigin placeholder:@"icon_loading_image"];
-    NSString *title =  [NSString stringWithFormat:@"%.2f万", album.playTimes / (1000.0 * 1000.0)];
-    [self.playCountLabel setTitle:title forState:UIControlStateNormal];
+    NSString *title =  [NSString stringWithFormat:@"%.f万", album.playTimes / 10000.0];
+    [self.countButton setTitle:title forState:UIControlStateNormal];
 }
 
 #pragma mark - action
 
-- (IBAction)backEvent:(UIButton *)sender {
+- (void)backDidEvent:(UIButton *)sender {
     
     if (self.backDidBlock) {
         self.backDidBlock();

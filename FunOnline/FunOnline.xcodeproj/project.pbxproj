@@ -73,7 +73,6 @@
 		2B331F8E2085D2300016EB9A /* MusicMoreListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2B331F8C2085D2300016EB9A /* MusicMoreListCell.xib */; };
 		2B331F942085DEF50016EB9A /* AlbumModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B331F922085DEF50016EB9A /* AlbumModel.m */; };
 		2B331F982085E00A0016EB9A /* MusciDropMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B331F972085E00A0016EB9A /* MusciDropMenu.m */; };
-		2B331F9A2085E0810016EB9A /* MusciDropMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2B331F992085E0810016EB9A /* MusciDropMenu.xib */; };
 		2B430A9B207B40B300313B4C /* NewsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B430A99207B40B300313B4C /* NewsTableViewCell.m */; };
 		2B430A9C207B40B300313B4C /* NewsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2B430A9A207B40B300313B4C /* NewsTableViewCell.xib */; };
 		2B430A9F207B42E900313B4C /* NewsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B430A9E207B42E900313B4C /* NewsModel.m */; };
@@ -252,7 +251,6 @@
 		2B331F932085DEF50016EB9A /* AlbumModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlbumModel.h; sourceTree = "<group>"; };
 		2B331F962085E00A0016EB9A /* MusciDropMenu.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MusciDropMenu.h; sourceTree = "<group>"; };
 		2B331F972085E00A0016EB9A /* MusciDropMenu.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MusciDropMenu.m; sourceTree = "<group>"; };
-		2B331F992085E0810016EB9A /* MusciDropMenu.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MusciDropMenu.xib; sourceTree = "<group>"; };
 		2B430A98207B40B300313B4C /* NewsTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NewsTableViewCell.h; sourceTree = "<group>"; };
 		2B430A99207B40B300313B4C /* NewsTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NewsTableViewCell.m; sourceTree = "<group>"; };
 		2B430A9A207B40B300313B4C /* NewsTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NewsTableViewCell.xib; sourceTree = "<group>"; };
@@ -776,7 +774,6 @@
 			children = (
 				2B331F962085E00A0016EB9A /* MusciDropMenu.h */,
 				2B331F972085E00A0016EB9A /* MusciDropMenu.m */,
-				2B331F992085E0810016EB9A /* MusciDropMenu.xib */,
 			);
 			path = MusciDropMenu;
 			sourceTree = "<group>";
@@ -1095,7 +1092,6 @@
 				2BE3F8412086DA0A003157EA /* MusicPlayerViewController.xib in Resources */,
 				2B430A9C207B40B300313B4C /* NewsTableViewCell.xib in Resources */,
 				2B331F8E2085D2300016EB9A /* MusicMoreListCell.xib in Resources */,
-				2B331F9A2085E0810016EB9A /* MusciDropMenu.xib in Resources */,
 				2B331F8020859B9E0016EB9A /* MusicClassifyCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -13,17 +13,23 @@
 #import "FLCycleNavMenu.h"
 #import "MusciDropMenu.h"
 
-static CGFloat  kPointHeight = 158.f;
+static CGFloat  kPointHeight  = 158.f;
+static CGFloat  kHeaderHeight = 240.f;
 static NSString *const kPlayListCellIdentifier = @"kPlayListCellIdentifier";
 
 @interface MusicPlayListController ()<MusicPlayerControllerDelegate, MusicPlayBarDelegate>
 @property (nonatomic, strong) MusicPlayerViewController *playerVC;
 @property (nonatomic, strong) MusicPlayManagerBar       *playBar;
+@property (nonatomic, strong) UIVisualEffectView        *effectView;
 @property (nonatomic, strong) NSMutableArray            *playItems;
 @property (nonatomic, strong) FLCycleNavMenu            *cycleNavMenu;
-@property (nonatomic, strong) MusciDropMenu             *dropMenu;
+@property (nonatomic, strong) MusciDropMenu             *dropFlexView;
+@property (nonatomic, strong) UIImageView               *backFlexView;
+@property (nonatomic, strong) UIButton                  *backButton;
 @property (nonatomic, assign) PlayerBackState            playState;
+@property (nonatomic, assign) CGRect                     orginalFrame;
 @property (nonatomic, assign) BOOL                       isPlaying;
+
 /** 记录当前播放的歌曲位置 */
 @property (nonatomic, assign) NSInteger currentIndex;
 
@@ -78,26 +84,50 @@ static NSString *const kPlayListCellIdentifier = @"kPlayListCellIdentifier";
     self.currentIndex = 0; //默认值
     self.playState    = PlayerBackStatePause;
     
-    self.dropMenu = [MusciDropMenu loadNibDrop];
-    self.dropMenu.frame = CGRectMake(0, 0, SCREEN_WIDTH, 240);
-    [self.view addSubview:self.dropMenu];
+    self.backFlexView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"icon_drop_image"]];
+    self.backFlexView.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_WIDTH * 0.8);
+    UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
+    self.effectView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
+    self.effectView.frame = self.backFlexView.bounds;
+    self.effectView.alpha = 0.7;
+    [self.backFlexView addSubview:self.effectView];
+    [self.view addSubview:self.backFlexView];
+    self.orginalFrame = self.backFlexView.frame;
     
-    [self.tableView registerNib:[UINib nibWithNibName:@"MusicMoreListCell" bundle:nil] forCellReuseIdentifier:kPlayListCellIdentifier];
+    WeakSelf;
+    self.dropFlexView = [[MusciDropMenu alloc] initWithFrame:self.backFlexView.bounds];
+    [self.view addSubview:self.dropFlexView];
+    [self.view bringSubviewToFront:self.dropFlexView];
+    self.dropFlexView.backDidBlock = ^{
+        [weakSelf.navigationController popViewControllerAnimated:YES];
+    };
+    
+    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, kHeaderHeight)];
+    headerView.backgroundColor = [UIColor clearColor];
+    headerView.userInteractionEnabled = NO;
     self.tableView.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT-60);
-    self.tableView.tableHeaderView = self.dropMenu;
+    self.tableView.backgroundColor = [UIColor clearColor];
+    [self.tableView registerNib:[UINib nibWithNibName:@"MusicMoreListCell" bundle:nil] forCellReuseIdentifier:kPlayListCellIdentifier];
+    self.tableView.tableHeaderView = headerView;
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     [self.view addSubview:self.tableView];
     
-    WeakSelf;
     self.cycleNavMenu = [[FLCycleNavMenu alloc] init];
     [self.view addSubview:self.cycleNavMenu];
     self.cycleNavMenu.backDidFinishedBlock = ^{
         [weakSelf.navigationController popViewControllerAnimated:YES];
     };
     
-    self.dropMenu.backDidBlock = ^{
-        [weakSelf.navigationController popViewControllerAnimated:YES];
-    };
+    self.backButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [self.backButton setImage:[UIImage imageNamed:@"icon_return"] forState:UIControlStateNormal];
+    self.backButton.frame = CGRectMake(20, 40, 22, 22);
+    [self.backButton addTarget:self action:@selector(backDidEvent) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:self.backButton];
+}
+
+- (void)backDidEvent {
+    
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)configPlayBar {
@@ -128,11 +158,9 @@ static NSString *const kPlayListCellIdentifier = @"kPlayListCellIdentifier";
         if (!responseObj || ![responseObj isKindOfClass:[NSDictionary class]]) return;
         
         if ([responseObj[@"msg"] integerValue] == 0) {
-            AlbumModel *album = [AlbumModel mj_objectWithKeyValues:responseObj[@"album"]];
-            self.dropMenu.album = album;
-            self.cycleNavMenu.item = album;
-            
             NSArray *newObjects = responseObj[@"tracks"][@"list"];
+            
+            [self reloadMusicAlbum:[AlbumModel mj_objectWithKeyValues:responseObj[@"album"]]];
             [self.playItems addObjectsFromArray:[MusicPlayModel mj_objectArrayWithKeyValuesArray:newObjects]];
             
             [self configPlayBar];
@@ -143,6 +171,14 @@ static NSString *const kPlayListCellIdentifier = @"kPlayListCellIdentifier";
         
         [self endRefreshing];
     }];
+}
+
+- (void)reloadMusicAlbum:(AlbumModel *)album {
+    if (!album) return;
+    
+    self.cycleNavMenu.item  = album;
+    self.dropFlexView.album = album;
+    [self.backFlexView downloadImage:album.coverMiddle placeholder:@"icon_drop_image"];
 }
 
 #pragma mark - <MusicPlayBarDelegate>
@@ -240,23 +276,51 @@ static NSString *const kPlayListCellIdentifier = @"kPlayListCellIdentifier";
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     CGFloat offsetY = scrollView.contentOffset.y;
     
-    if (offsetY < kPointHeight) { // 0~1 => 0/headHeight ~ headHeight/headHeight
-        _cycleNavMenu.showTools = NO;
+    CGFloat alpha = offsetY/kPointHeight;
+    if (offsetY < kPointHeight) {
         _cycleNavMenu.titleColor = [UIColor colorWhiteColor];
-        _cycleNavMenu.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:offsetY/kPointHeight];
+        _cycleNavMenu.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:alpha];
+        if (alpha <= 0.f) {
+            _backButton.hidden      = NO;
+            _cycleNavMenu.cycleShow = YES;
+        }
     }else {
-        _cycleNavMenu.showTools = YES;
         _cycleNavMenu.titleColor = [UIColor colorWhiteColor];
-        _cycleNavMenu.backgroundColor = [[UIColor colorThemeColor] colorWithAlphaComponent:offsetY/kPointHeight];
+        _cycleNavMenu.backgroundColor = [[UIColor colorThemeColor] colorWithAlphaComponent:alpha];
+        if (alpha >= 1.f) {
+            _backButton.hidden      = YES;
+            _cycleNavMenu.cycleShow = NO;
+        }
     }
+    
+    [self updateFlexScale:offsetY];
 }
 
+- (void)updateFlexScale:(CGFloat)offset
+{
+    if (offset > 0) { //往上拖动
+        _backFlexView.frame = ({
+            CGRect frame   = _backFlexView.frame;
+            frame.origin.y = _orginalFrame.origin.y - offset;
+            frame;
+        });
+    }else { //向下拖动(背景图片向宽度改变，高度不变)
+        _backFlexView.frame = ({
+            CGRect frame      = _backFlexView.frame;
+            frame.size.width  = _orginalFrame.size.width-offset;
+            frame.size.height = _orginalFrame.size.height*frame.size.width/_orginalFrame.size.width;
+            frame.origin.x = -(frame.size.width-_orginalFrame.size.width)/2;
+            frame;
+        });
+    }
+    // 毛玻璃大小跟着变化
+    _effectView.frame = _backFlexView.bounds;
+}
 
 #pragma mark - <DZNEmptyDataSetDelegate>
 - (void)emptyDataSet:(UIScrollView *)scrollView didTapButton:(UIButton *)button {
     // Do something
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.25 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        
         [self loadPlayList];
     });
 }

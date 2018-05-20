@@ -21,7 +21,7 @@ static CGFloat kIphoneXHeight = 88.f; //导航栏高度
 
 @implementation FLCycleNavMenu
 
-#pragma mark - init method
+#pragma mark - LifeCycle
 
 - (instancetype)init {
     self = [super init];
@@ -29,6 +29,7 @@ static CGFloat kIphoneXHeight = 88.f; //导航栏高度
         CGFloat height = iPhoneX ? kIphoneXHeight : kDefaultHeight;
         self.frame = CGRectMake(0, 0, SCREEN_WIDTH, height);
         self.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.f];
+        self.hidden = YES; //默认隐藏
         [self setUp];
     }
     return self;
@@ -37,7 +38,6 @@ static CGFloat kIphoneXHeight = 88.f; //导航栏高度
 - (void)setUp
 {
     _leftButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    _leftButton.hidden = YES;
     [_leftButton setImage:[UIImage imageNamed:@"icon_return"] forState:UIControlStateNormal];
     [_leftButton addTarget:self action:@selector(backDidEvent:) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:_leftButton];
@@ -46,7 +46,6 @@ static CGFloat kIphoneXHeight = 88.f; //导航栏高度
     [self addSubview:_rightButton];
     
     _titleLabel = [[UILabel alloc] init];
-    _titleLabel.hidden = YES;
     _titleLabel.textAlignment = NSTextAlignmentCenter;
     _titleLabel.text = @"欢迎来到FunOline";
     _titleLabel.textColor = [UIColor colorWhiteColor];
@@ -61,7 +60,7 @@ static CGFloat kIphoneXHeight = 88.f; //导航栏高度
     }
 }
 
-#pragma mark - Setter
+#pragma mark - Private setter
 
 - (void)setTitle:(NSString *)title {
     _title = title;
@@ -87,17 +86,18 @@ static CGFloat kIphoneXHeight = 88.f; //导航栏高度
     self.titleLabel.textColor = titleColor;
 }
 
-- (void)setShowTools:(BOOL)showTools {
-    _showTools = showTools;
-    
-    self.leftButton.hidden = !showTools;
-    self.titleLabel.hidden = !showTools;
-}
-
 - (void)setItem:(AlbumModel *)item {
     _item = item;
     
     self.titleLabel.text = item.title;
+}
+
+- (void)setCycleShow:(BOOL)cycleShow {
+    _cycleShow = cycleShow;
+    
+    self.hidden = cycleShow;
+    self.rightButton.hidden = cycleShow;
+    self.titleLabel.hidden = cycleShow;
 }
 
 #pragma mark - layoutSubviews

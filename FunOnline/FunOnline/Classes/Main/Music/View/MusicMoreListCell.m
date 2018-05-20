@@ -29,7 +29,6 @@
 }
 
 - (void)setModel:(MusicPlayModel *)model {
-    
     _model = model;
     
     self.titleLabel.text = model.title;
@@ -37,7 +36,7 @@
     self.commentsLabel.text = [NSString stringWithFormat:@"%ld集", model.commentsCount];
     [self.coverImageView downloadImage:model.coverMiddle ? model.coverMiddle : model.coverPath placeholder:@"icon_default_image"];
     self.createTimeLabel.text = model.createdAt ? [NSString conversionDate:[NSString stringWithFormat:@"%ld", [model.createdAt integerValue] / 1000]] : @"";
-    self.playCountLabel.text = model.playsCounts ? [NSString stringWithFormat:@"%.2f万", model.playsCounts / (1000.0 * 1000.0)] : [NSString stringWithFormat:@"%.2f万", model.playtimes / (1000.0 * 1000.0)];
+    self.playCountLabel.text = model.playsCounts ? [NSString stringWithFormat:@"%.f万", model.playsCounts / 10000.0] : [NSString stringWithFormat:@"%.f万", model.playtimes / 10000.0];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

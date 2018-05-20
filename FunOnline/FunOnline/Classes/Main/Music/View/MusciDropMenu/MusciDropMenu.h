@@ -12,12 +12,9 @@
 typedef void(^BackDidFinishedBlock)(void);
 
 @interface MusciDropMenu : UIView
-
-/** 加载xib视图 */
-+ (instancetype)loadNibDrop;
 /** 模型数据 */
 @property (nonatomic, strong) AlbumModel *album;
-/** 返回回调 */
+/** 返回点击回调 */
 @property (nonatomic, copy) BackDidFinishedBlock backDidBlock;
 
 @end
