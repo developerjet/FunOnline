@@ -23,7 +23,8 @@
         _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, height)];
         _tableView.contentInset = UIEdgeInsetsMake(0, 0, 44, 0);
         _tableView.showsHorizontalScrollIndicator = NO;
-        _tableView.separatorColor = [UIColor colorBoardLineColor];
+        _tableView.backgroundColor = [UIColor viewBackGroundColor];
+        _tableView.separatorColor = [UIColor clearColor];
         _tableView.delegate = self;
         _tableView.dataSource = self;
     }
@@ -45,7 +46,7 @@
         _collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, height) collectionViewLayout:flowLayout];
         _collectionView.delegate   = self;
         _collectionView.dataSource = self;
-        _collectionView.backgroundColor = [UIColor whiteColor];
+        _collectionView.backgroundColor = [UIColor clearColor];
         _collectionView.showsHorizontalScrollIndicator = NO;
     }
     return _collectionView;
