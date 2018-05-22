@@ -82,7 +82,7 @@
     
     self.automaticallyAdjustsScrollViewInsets = NO;
     self.navigationController.navigationBar.translucent = NO;
-    self.view.backgroundColor = [UIColor colorWhiteColor];
+    self.view.backgroundColor = [UIColor viewBackGroundColor];
     
     self.tableView.emptyDataSetSource   = self;
     self.tableView.emptyDataSetDelegate = self;

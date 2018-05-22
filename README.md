@@ -16,6 +16,6 @@
 * 音库模块为你推荐当下最热门的歌曲和不同的歌曲类型，炫酷音乐播放界面和功能<br>
 * 后续功能继续完善中....<br>
 
-### 项目遵从Licensed under the MIT licens.开源协议
+### Licensed under the MIT licens.
 * 希望大家切勿私自拿该项目去appStore上架作为商业用途，否则必将追究相关法律及侵权责任<br>
 * 喜欢的朋友麻烦点个Star，非常感谢<br>
