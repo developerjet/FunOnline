@@ -89,7 +89,7 @@ static NSString *const kPlayListCellIdentifier = @"kPlayListCellIdentifier";
     UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
     self.effectView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
     self.effectView.frame = self.backFlexView.bounds;
-    self.effectView.alpha = 0.7;
+    self.effectView.alpha = 0.4;
     [self.backFlexView addSubview:self.effectView];
     [self.view addSubview:self.backFlexView];
     self.orginalFrame = self.backFlexView.frame;
@@ -104,7 +104,6 @@ static NSString *const kPlayListCellIdentifier = @"kPlayListCellIdentifier";
     
     UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, kHeaderHeight)];
     headerView.backgroundColor = [UIColor clearColor];
-    headerView.userInteractionEnabled = NO;
     self.tableView.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT-60);
     self.tableView.backgroundColor = [UIColor clearColor];
     [self.tableView registerNib:[UINib nibWithNibName:@"MusicMoreListCell" bundle:nil] forCellReuseIdentifier:kPlayListCellIdentifier];
@@ -117,17 +116,6 @@ static NSString *const kPlayListCellIdentifier = @"kPlayListCellIdentifier";
     self.cycleNavMenu.backDidFinishedBlock = ^{
         [weakSelf.navigationController popViewControllerAnimated:YES];
     };
-    
-    self.backButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [self.backButton setImage:[UIImage imageNamed:@"icon_return"] forState:UIControlStateNormal];
-    self.backButton.frame = CGRectMake(20, 40, 22, 22);
-    [self.backButton addTarget:self action:@selector(backDidEvent) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:self.backButton];
-}
-
-- (void)backDidEvent {
-    
-    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)configPlayBar {
@@ -150,7 +138,7 @@ static NSString *const kPlayListCellIdentifier = @"kPlayListCellIdentifier";
                              };
     
     NSString *baseUrl = [NSString stringWithFormat:@"http://mobile.ximalaya.com/mobile/others/ca/album/track/%ld/true/1/20?"
-                               , self.param.albumId];
+                         , self.param.albumId];
     
     [XDProgressHUD showHUDWithIndeterminate:@"Loading..."];
     [[RequestManager manager] POST:baseUrl parameters:params success:^(id  _Nullable responseObj) {
@@ -202,6 +190,7 @@ static NSString *const kPlayListCellIdentifier = @"kPlayListCellIdentifier";
         if (play.playingIndex == 0) {
             self.playerVC.playingIndex = play.playingIndex;
             [self.playerVC reloadPlayer];
+            _isPlaying = YES; //已经开启了播放
         }else {
             [self.playerVC startPlay];
         }
@@ -211,6 +200,7 @@ static NSString *const kPlayListCellIdentifier = @"kPlayListCellIdentifier";
 #pragma mark - <MusicPlayerControllerDelegate>
 - (void)player:(MusicPlayerViewController *)player DidPlaySongAtIndex:(NSInteger)index
 {
+    self.isPlaying            = YES;
     self.currentIndex         = index;
     self.playBar.playingIndex = index;
 }
@@ -250,20 +240,20 @@ static NSString *const kPlayListCellIdentifier = @"kPlayListCellIdentifier";
         self.playBar.playingIndex  = indexPath.row;
         self.playerVC.playObjects  = self.playItems;
         self.playerVC.playingIndex = indexPath.row;
-        if (indexPath.row == _currentIndex) {
-            if (self.isPlaying) {
-                if (_playState == PlayerBackStatePause ||
-                    _playState == PlayerBackStatePlay) {
+        
+        if (_isPlaying) {
+            if (_playState == PlayerBackStatePause ||
+                _playState == PlayerBackStatePlay) {
+                if (_currentIndex == indexPath.row) {
                     [self.playerVC redisShow];
+                }else {
+                    [self.playerVC show];
                 }
-            }else {
-                [self.playerVC show];
             }
         }else {
+            _isPlaying = YES;
             [self.playerVC show];
-            self.isPlaying = YES;
         }
-        
         _currentIndex = indexPath.row;
     }
 }
@@ -276,38 +266,31 @@ static NSString *const kPlayListCellIdentifier = @"kPlayListCellIdentifier";
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     CGFloat offsetY = scrollView.contentOffset.y;
     
-    CGFloat alpha = offsetY/kPointHeight;
-    if (offsetY < kPointHeight) {
-        _cycleNavMenu.titleColor = [UIColor colorWhiteColor];
-        _cycleNavMenu.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:alpha];
-        if (alpha <= 0.f) {
-            _backButton.hidden      = NO;
-            _cycleNavMenu.cycleShow = YES;
-        }
-    }else {
-        _cycleNavMenu.titleColor = [UIColor colorWhiteColor];
-        _cycleNavMenu.backgroundColor = [[UIColor colorThemeColor] colorWithAlphaComponent:alpha];
-        if (alpha >= 1.f) {
-            _backButton.hidden      = YES;
-            _cycleNavMenu.cycleShow = NO;
-        }
-    }
-    
     [self updateFlexScale:offsetY];
 }
 
-- (void)updateFlexScale:(CGFloat)offset
-{
-    if (offset > 0) { //往上拖动
+- (void)updateFlexScale:(CGFloat)offsetY {
+    CGFloat alpha = offsetY / kPointHeight;
+    
+    if (offsetY < kPointHeight) {
+        _cycleNavMenu.hideLine = YES;
+    }else {
+        if (alpha >= 1.f) {
+            _cycleNavMenu.hideLine = NO;
+        }
+    }
+    _cycleNavMenu.backgroundColor = [[UIColor colorThemeColor] colorWithAlphaComponent:alpha];
+    
+    if (offsetY > 0) { //往上拖动
         _backFlexView.frame = ({
             CGRect frame   = _backFlexView.frame;
-            frame.origin.y = _orginalFrame.origin.y - offset;
+            frame.origin.y = _orginalFrame.origin.y - offsetY;
             frame;
         });
     }else { //向下拖动(背景图片向宽度改变，高度不变)
         _backFlexView.frame = ({
             CGRect frame      = _backFlexView.frame;
-            frame.size.width  = _orginalFrame.size.width-offset;
+            frame.size.width  = _orginalFrame.size.width-offsetY;
             frame.size.height = _orginalFrame.size.height*frame.size.width/_orginalFrame.size.width;
             frame.origin.x = -(frame.size.width-_orginalFrame.size.width)/2;
             frame;
@@ -337,3 +320,4 @@ static NSString *const kPlayListCellIdentifier = @"kPlayListCellIdentifier";
 }
 
 @end
+

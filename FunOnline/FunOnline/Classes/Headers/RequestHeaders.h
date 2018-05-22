@@ -45,7 +45,11 @@ static  NSString *kGlobalHost2 = @"http://mobile.ximalaya.com";
 /** 分类详情列表 */
 #define url_music_list         kMusicUrl(@"/mobile/discovery/v1/category/album")
 
+/** 更多分类详情列表 */
+#define url_more_music         @"http://180.153.255.6/mobile/discovery/v2/category/filter/albums/ts-1526870755114?"
+
 /** 音乐播放详情 */
 #define url_music_detail       kMusicUrl("/mobile/others/ca/album/track/2650009/true/1/20?")
 
 #endif /* RequestHeaders_h */
+

@@ -9,7 +9,7 @@
 #import "MusicHotViewController.h"
 #import "MusicMoreListController.h"
 #import "MusicPlayListController.h"
-#import "InfiniteCarouselView.h"
+#import "FLCycleCarouselView.h"
 #import "MusicClassHeaderView.h"
 #import "MusicMoreListCell.h"
 #import "MusicClassModel.h"
@@ -18,9 +18,10 @@
 static NSString *const kMusicClassesCellIdentifier   = @"kMusicClassesCellIdentifier";
 static NSString *const kMusicClassesHeaderIdentifier = @"kMusicClassesHeaderIdentifier";
 
-@interface MusicHotViewController ()<InfiniteCarouselDelegate>
+@interface MusicHotViewController ()<InfiniteCarouselDelegate, MusicClassHeaderDelegate>
 
-@property (nonatomic, strong) InfiniteCarouselView *carouselView;
+@property (nonatomic, strong) FLCycleCarouselView *carouselView;
+@property (nonatomic, strong) UIView           *carouselBgView;
 @property (nonatomic, strong) NSMutableArray   *imagesGroup;
 @property (nonatomic, strong) NSMutableArray   *dataSource;
 @property (nonatomic, strong) UITableView      *groupTable;
@@ -38,12 +39,12 @@ static NSString *const kMusicClassesHeaderIdentifier = @"kMusicClassesHeaderIden
         _groupTable = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, height) style:UITableViewStyleGrouped];
         _groupTable.showsHorizontalScrollIndicator = NO;
         _groupTable.contentInset = UIEdgeInsetsMake(0, 0, 44, 0);
-        _groupTable.separatorColor = [UIColor colorBoardLineColor];
         _groupTable.delegate = self;
         _groupTable.dataSource = self;
-        _groupTable.emptyDataSetSource   = self;
+        _groupTable.emptyDataSetSource = self;
         _groupTable.emptyDataSetDelegate = self;
-        _groupTable.backgroundColor = [UIColor colorBackGroundColor];
+        _groupTable.separatorColor = [UIColor colorBoardLineColor];
+        _groupTable.backgroundColor = [UIColor viewBackGroundColor];
         [_groupTable registerClass:[MusicClassHeaderView class] forHeaderFooterViewReuseIdentifier:kMusicClassesHeaderIdentifier];
         [_groupTable registerNib:[UINib nibWithNibName:@"MusicMoreListCell" bundle:nil] forCellReuseIdentifier:kMusicClassesCellIdentifier];
     }
@@ -84,14 +85,16 @@ static NSString *const kMusicClassesHeaderIdentifier = @"kMusicClassesHeaderIden
 {
     self.groupTable.tableHeaderView = ({
         UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_WIDTH * 0.5)];
-        view.backgroundColor = [UIColor colorWithHexString:@"FFFFFF"];
-        CGFloat height = view.tj_height - 20;
-        self.carouselView = [[InfiniteCarouselView alloc] initWithFrame:CGRectMake(0, 10, SCREEN_WIDTH, height)];
+        view.backgroundColor = [UIColor viewBackGroundColor];
+        CGFloat marign = 10;
+        CGFloat height = view.tj_height - marign * 2;
+        self.carouselView = [[FLCycleCarouselView alloc] initWithFrame:CGRectMake(0, marign, SCREEN_WIDTH, height)];
         self.carouselView.delegate = self;
         self.carouselView.cornerRadius = 5;
         self.carouselView.autoScrollTime = 0.2;
-        self.carouselView.placeholder = @"icon_banner_placeholder";
+        self.carouselView.placeholder = @"icon_loading_banner";
         [view addSubview:self.carouselView];
+        _carouselBgView = view;
         view;
     });
     
@@ -103,10 +106,20 @@ static NSString *const kMusicClassesHeaderIdentifier = @"kMusicClassesHeaderIden
     WeakSelf;
     self.groupTable.mj_header = [FLRefreshGifHeader headerWithRefreshingBlock:^{
         
-        [weakSelf loadRecommend];
+        [weakSelf loadingHotObject];
     }];
     
     [self.groupTable.mj_header beginRefreshing];
+}
+
+// 重写
+- (void)recoverRefresh {
+    [super recoverRefresh];
+    
+    if (![self.groupTable.mj_header isRefreshing]) {
+        
+        [self.groupTable.mj_header beginRefreshing];
+    }
 }
 
 - (void)endGroupRefreh {
@@ -120,35 +133,41 @@ static NSString *const kMusicClassesHeaderIdentifier = @"kMusicClassesHeaderIden
     }
 }
 
-// 重写父类方法
-- (void)recoverRefresh {
-    [super recoverRefresh];
-    
-    if (![self.groupTable.mj_header isRefreshing]) {
-        [self.groupTable.mj_header beginRefreshing];
+#pragma mark - MusicClassHeaderDelegate
+
+- (void)header:(MusicClassHeaderView *)header DidSelectClassModel:(MusicClassModel *)model {
+    if (!model.keywordId) {
+        [self loadingHot];
+        return;
     }
+    
+    MusicMoreListController *detailVC = [[MusicMoreListController alloc] init];
+    detailVC.param = model;
+    detailVC.isMore = YES;
+    [self.navigationController pushViewController:detailVC animated:YES];
 }
 
 #pragma mark - InfiniteCarouselDelegate
 
-- (void)carousel:(InfiniteCarouselView *)carousel didSelectItemAtModel:(BannerModel *)model {
+- (void)carousel:(FLCycleCarouselView *)carousel didSelectItemAtModel:(BannerModel *)model {
     
-    [self jumpToMore];
+    [self loadingHot];
 }
 
-- (void)jumpToMore
+- (void)loadingHot
 {
-    MusicClassModel *param = [[MusicClassModel alloc] init];
+    MusicClassModel *param = [MusicClassModel new];
     param.tname = @"榜单";
     param.categoryId = @"2"; //默认id
     MusicMoreListController *detailVC = [[MusicMoreListController alloc] init];
     detailVC.param = param;
+    detailVC.isMore = NO;
     [self.navigationController pushViewController:detailVC animated:YES];
 }
 
-#pragma mark - Networking
+#pragma mark - networking
 
-- (void)loadRecommend
+- (void)loadingHotObject
 {
     NSDictionary *params = @{
                              @"categoryId": @"2",
@@ -165,14 +184,15 @@ static NSString *const kMusicClassesHeaderIdentifier = @"kMusicClassesHeaderIden
         if (!responseObj || ![responseObj isKindOfClass:[NSDictionary class]]) return;
         
         if ([responseObj[@"msg"] isEqualToString:@"成功"]) {
+            weakSelf.carouselBgView.backgroundColor = [UIColor colorWhiteColor];
             [self clearLastObjects];
-            NSArray *bannerObjects   = responseObj[@"focusImages"][@"list"];
-            NSArray *categoryObjects = responseObj[@"categoryContents"][@"list"];
             
-            [self.imagesGroup addObjectsFromArray:[BannerModel mj_objectArrayWithKeyValuesArray:bannerObjects]];
-            [self.dataSource addObjectsFromArray:[MusicClassModel mj_objectArrayWithKeyValuesArray:categoryObjects]];
+            NSArray *banners   = responseObj[@"focusImages"][@"list"];
+            NSArray *categorys = responseObj[@"categoryContents"][@"list"];
+            
+            [self.imagesGroup addObjectsFromArray:[BannerModel mj_objectArrayWithKeyValuesArray:banners]];
+            [self.dataSource addObjectsFromArray:[MusicClassModel mj_objectArrayWithKeyValuesArray:categorys]];
             self.carouselView.imageURLStringsGroup = self.imagesGroup;
-
             [weakSelf.groupTable reloadData];
         }
         
@@ -221,9 +241,9 @@ static NSString *const kMusicClassesHeaderIdentifier = @"kMusicClassesHeaderIden
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     
     MusicClassHeaderView *header = [tableView dequeueReusableHeaderFooterViewWithIdentifier:kMusicClassesHeaderIdentifier];
+    header.delegate = self;
     if (self.dataSource.count > section) {
-        MusicClassModel *model = self.dataSource[section];
-        header.classLabel.text = model.title;
+        header.model = self.dataSource[section];;
     }
     return header;
 }
@@ -235,7 +255,7 @@ static NSString *const kMusicClassesHeaderIdentifier = @"kMusicClassesHeaderIden
     
     if (self.dataSource.count > indexPath.section) {
         if (indexPath.section == 0 && indexPath.row == 0) {
-            [self jumpToMore];
+            [self loadingHot];
         }else {
             MusicClassModel *classes = self.dataSource[indexPath.section];
             if (classes.list.count > indexPath.row) {
@@ -258,43 +278,12 @@ static NSString *const kMusicClassesHeaderIdentifier = @"kMusicClassesHeaderIden
     return 50;
 }
 
-#pragma mark - <DZNEmptyDataSetSource>
-- (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView {
-    
-    return [UIImage imageNamed:@"icon_loading_image"];
-}
-
-- (NSAttributedString *)buttonTitleForEmptyDataSet:(UIScrollView *)scrollView forState:(UIControlState)state {
-    NSString *buttonTitle = @"请点击重试哟~";
-    NSDictionary *attributes = @{
-                                 NSFontAttributeName:[UIFont boldSystemFontOfSize:17.0f],
-                                 NSForegroundColorAttributeName: [UIColor colorThemeColor]
-                                 };
-    return [[NSAttributedString alloc] initWithString:buttonTitle attributes:attributes];
-}
-
 #pragma mark - <DZNEmptyDataSetDelegate>
 - (void)emptyDataSet:(UIScrollView *)scrollView didTapButton:(UIButton *)button {
     WeakSelf;
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.25 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         
-        [weakSelf restRefresh];
+        [weakSelf.groupTable.mj_header beginRefreshing];
     });
 }
-
-- (void)restRefresh {
-    
-    if (![self.groupTable.mj_header isRefreshing]) {
-        [self.groupTable.mj_header beginRefreshing];
-    }
-    if (![self.groupTable.mj_header isRefreshing]) {
-        [self.groupTable.mj_header beginRefreshing];
-    }
-}
-
-- (CGFloat)verticalOffsetForEmptyDataSet:(UIScrollView *)scrollView {
-    
-    return SCREEN_HEIGHT * 0.2;
-}
-
 @end

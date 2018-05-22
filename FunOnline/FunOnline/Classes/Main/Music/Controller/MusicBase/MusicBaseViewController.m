@@ -16,7 +16,6 @@
 
 @property (nonatomic, strong) LKSegmentItemBar *segmenItemView;
 @property (nonatomic, strong) UIScrollView     *subViewScroll;
-
 @property (nonatomic, assign) NSInteger        currentIndex;
 
 @end
@@ -124,9 +123,9 @@
 {
     CGPoint point = CGPointMake(index * self.subViewScroll.frame.size.width, self.subViewScroll.contentOffset.y);
     [self.subViewScroll setContentOffset:point animated:YES];
-    
+
     if (_currentIndex == index) {
-        [NC postNotificationName:NC_Reload_Music object:nil];
+        [NC postNotificationName:NC_Reload_Music object:nil userInfo:nil]; //再次刷新通知
     }
     _currentIndex = index;
 }

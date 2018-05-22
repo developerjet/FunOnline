@@ -37,6 +37,8 @@
 + (UIColor *)colorBoardLineColor;
 /**view纯白背景色*/
 + (UIColor *)colorWhiteColor;
+/**view偏灰色背景色*/
++(UIColor *)viewBackGroundColor;
 /**登录&注册输入框分割线颜色*/
 + (UIColor *)colorLoginRgisterLineColor;
 

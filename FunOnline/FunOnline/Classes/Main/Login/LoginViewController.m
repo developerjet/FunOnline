@@ -50,6 +50,7 @@
     titleLabel.text = @"当前可用登录方式";
     titleLabel.font = [UIFont systemFontOfSize:16];
     titleLabel.textColor = [UIColor colorWhiteColor];
+    titleLabel.textAlignment = NSTextAlignmentCenter;
     [self.view addSubview:titleLabel];
     self.titleLabel = titleLabel;
     

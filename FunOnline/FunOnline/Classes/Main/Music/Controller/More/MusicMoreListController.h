@@ -13,4 +13,6 @@
 
 @property (nonatomic, strong) MusicClassModel *param;
 
+@property (nonatomic, assign) BOOL isMore;
+
 @end

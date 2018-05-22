@@ -17,8 +17,8 @@
 @property (nonatomic, copy) NSString *calcDimension;
 @property (nonatomic, copy) NSString *tagName;
 @property (nonatomic, copy) NSString *contentType;
-@property (nonatomic, copy) NSString *keywordId;
 @property (nonatomic, copy) NSString *keywordName;
+@property (nonatomic, assign) NSInteger keywordId;
 @property (nonatomic, assign) NSInteger moduleType;
 @property (nonatomic, assign) BOOL hasMore;
 @property (nonatomic, strong) NSArray *list;

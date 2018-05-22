@@ -8,15 +8,20 @@
 
 #import "MusicClassifyController.h"
 #import "MusicMoreListController.h"
+#import "MusicPlayListController.h"
 #import "MusicHotViewController.h"
-#import "MusicClassifyCell.h"
+#import "MusicMoreListCell.h"
+#import "PagingScrollMenu.h"
 #import "MusicClassModel.h"
 
-static NSString *const kMusicClassifyCellIdentifier = @"kMusicClassifyCellIdentifier";
+static NSString *const kMusicMoreCellIdentifier = @"kMusicMoreCellIdentifier";
 
-@interface MusicClassifyController ()
-@property (nonatomic, strong) NSMutableArray *imageObjects;
-@property (nonatomic, strong) NSMutableArray *dataSource;
+@interface MusicClassifyController ()<PagingScrollMenuDelegate>
+@property (nonatomic, strong) NSMutableArray   *dataSource;
+@property (nonatomic, strong) NSMutableArray   *titleObjects;
+@property (nonatomic, strong) PagingScrollMenu *pageScrollMenu;
+@property (nonatomic, assign) NSInteger        scrollIndex;
+@property (nonatomic, copy) void(^refreshingBlock)(void);
 
 @end
 
@@ -24,13 +29,13 @@ static NSString *const kMusicClassifyCellIdentifier = @"kMusicClassifyCellIdenti
 
 #pragma mark - Lazys
 
-- (NSMutableArray *)imageObjects
+- (NSMutableArray *)titleObjects
 {
-    if (!_imageObjects) {
+    if (!_titleObjects) {
         
-        _imageObjects = [NSMutableArray arrayWithCapacity:0];
+        _titleObjects = [NSMutableArray arrayWithCapacity:0];
     }
-    return _imageObjects;
+    return _titleObjects;
 }
 
 - (NSMutableArray *)dataSource
@@ -48,44 +53,102 @@ static NSString *const kMusicClassifyCellIdentifier = @"kMusicClassifyCellIdenti
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    self.title = @"乐库";
-    self.view.backgroundColor = COLORHEX(@"F8F8F8");
-    
-    self.navigationItem.rightBarButtonItem = [UIBarButtonItem itemWithImage:@"more_icon"
-                                                               highlightImg:@"more_icon"
-                                                                     target:self
-                                                                     action:@selector(jumpToMore)];
-    
-    [self configuraTable];
+    _scrollIndex = 0;
+    [self configSubviews];
+    [self loadClassTitle];
 }
 
-- (void)configuraTable
+- (void)configSubviews
 {
-    CGFloat height = iPhoneX ? (SCREEN_HEIGHT-88-83) : (SCREEN_HEIGHT-64-49);
-    self.tableView.frame = CGRectMake(0, 0, SCREEN_WIDTH, height);
-    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    [self.tableView registerNib:[UINib nibWithNibName:@"MusicClassifyCell" bundle:nil] forCellReuseIdentifier:kMusicClassifyCellIdentifier];
+    PagingScrollMenu *pageScrollMenu = [[PagingScrollMenu alloc] initWithOrigin:CGPointMake(0, 0)
+                                                                         height:40];
+    pageScrollMenu.tintColor = COLORHEX(@"#FF4500");
+    pageScrollMenu.hidden = YES;
+    pageScrollMenu.delegate = self;
+    [self.view addSubview:pageScrollMenu];
+    self.pageScrollMenu = pageScrollMenu;
+    
+    CGFloat maxTop = CGRectGetMaxY(pageScrollMenu.frame);
+    CGFloat height = iPhoneX ? (SCREEN_HEIGHT-88-83-maxTop) : (SCREEN_HEIGHT-64-49-maxTop);
+    self.tableView.frame = CGRectMake(0, maxTop, SCREEN_WIDTH, height);
+    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+    [self.tableView registerNib:[UINib nibWithNibName:@"MusicMoreListCell" bundle:nil] forCellReuseIdentifier:kMusicMoreCellIdentifier];
     [self.view addSubview:self.tableView];
     
+    [self addRefreshing];
+}
+
+- (void)addRefreshing
+{
     WeakSelf;
     self.tableView.mj_header = [FLRefreshGifHeader headerWithRefreshingBlock:^{
-        
-        [weakSelf loadClassifys];
+        weakSelf.page = 1;
+        if (weakSelf.titleObjects.count <= 0) {
+            [weakSelf loadClassTitle];
+            weakSelf.refreshingBlock = ^{
+                [weakSelf showRefreshing:weakSelf.page];
+            };
+        }else {
+            [weakSelf showRefreshing:weakSelf.page];
+        }
     }];
     
+    self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
+        weakSelf.page++;
+        [weakSelf showRefreshing:weakSelf.page];
+    }];
+}
+
+#pragma mark - PagingScrollMenuDelegate
+
+- (void)scroll:(PagingScrollMenu *)scroll didSelectItemAtIndex:(NSInteger)index {
+    _scrollIndex = index;
+    // 重刷列表
     [self.tableView.mj_header beginRefreshing];
 }
 
-- (void)jumpToMore
-{
-    MusicHotViewController *recommendVC = [[MusicHotViewController alloc] init];
-    [self.navigationController pushViewController:recommendVC animated:YES];
+#pragma mark - networking
+
+- (void)showRefreshing:(NSInteger)page {
+    
+    NSDictionary *parameters = @{
+                                 @"calcDimension": @"hot",
+                                 @"categoryId": @"2",
+                                 @"tagName": self.titleObjects[_scrollIndex],
+                                 @"device": @"ios",
+                                 @"pageSize": @"20",
+                                 @"pageId": @(page),
+                                 @"status": @"0"
+                                 };
+
+    [[RequestManager manager] GET:url_music_list parameters:parameters success:^(id  _Nullable responseObj) {
+        [self endRefreshing];
+        if (!responseObj || ![responseObj isKindOfClass:[NSDictionary class]]) return;
+
+        if ([responseObj[@"msg"] isEqualToString:@"成功"]) {
+            NSArray *newObjects  = responseObj[@"list"];
+            NSInteger totalCount = [responseObj[@"totalCount"] integerValue];
+
+            if (page == 1) {
+                [self.dataSource removeAllObjects];
+                self.tableView.mj_header.state = MJRefreshStateIdle;
+                self.tableView.mj_footer.state = MJRefreshStateIdle;
+            }else if (self.dataSource.count >= totalCount) {
+                [self.tableView.mj_footer endRefreshingWithNoMoreData];
+                self.tableView.mj_footer.state = MJRefreshStateNoMoreData;
+            }
+
+            [self.dataSource addObjectsFromArray:[MusicPlayModel mj_objectArrayWithKeyValuesArray:newObjects]];
+            [self.tableView reloadData];
+        }
+
+    } failure:^(NSError * _Nonnull error) {
+
+        [self endRefreshing];
+    }];
 }
 
-
-#pragma mark - Request
-
-- (void)loadClassifys
+- (void)loadClassTitle
 {
     NSDictionary *params = @{
                              @"categoryId": @"2",
@@ -95,34 +158,35 @@ static NSString *const kMusicClassifyCellIdentifier = @"kMusicClassifyCellIdenti
                              @"scale": @"2"
                              };
     
+    WeakSelf;
     [[RequestManager manager] GET:url_music_classify parameters:params success:^(id  _Nullable responseObj) {
-        if (!responseObj || ![responseObj isKindOfClass:[NSDictionary class]]) return;
         [self endRefreshing];
+        if (!responseObj || ![responseObj isKindOfClass:[NSDictionary class]]) return;
         
         if ([responseObj[@"msg"] isEqualToString:@"成功"]) {
-            if (self.dataSource.count) {
-                [self.dataSource removeAllObjects];
+            NSMutableArray *newTags = [MusicClassModel mj_objectArrayWithKeyValuesArray:responseObj[@"tags"][@"list"]];
+            ;
+            for (int i = 0; i < newTags.count; i++) {
+                MusicClassModel *mode = newTags[i];
+                [self.titleObjects addObject:mode.tname];
+                if (self.titleObjects.count >= newTags.count) {
+                    self.pageScrollMenu.hidden = NO;
+                    self.pageScrollMenu.titleStringGroup = self.titleObjects;
+                    [self.tableView.mj_header beginRefreshing]; //初次下拉刷新
+                    // 网络恢复时重新获取列表数据处理
+                    if (weakSelf.refreshingBlock) {
+                        weakSelf.refreshingBlock();
+                    }
+                }
             }
-            
-            NSArray *newObjects = responseObj[@"tags"][@"list"];
-            [self.dataSource addObjectsFromArray:[MusicClassModel mj_objectArrayWithKeyValuesArray:newObjects]];
-            
-            NSString *prefix = @"timg";
-            for (int idx = 0; idx < self.dataSource.count; idx++) {
-                NSString *imageName = [NSString stringWithFormat:@"%@%d", prefix, idx];
-                [self.imageObjects addObject:imageName];
-            }
-            
-            [self.tableView reloadData];
         }
-        
     } failure:^(NSError * _Nonnull error) {
         
         [self endRefreshing];
     }];
 }
 
-#pragma mark - table for data
+#pragma mark - TableView For dataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
@@ -131,30 +195,29 @@ static NSString *const kMusicClassifyCellIdentifier = @"kMusicClassifyCellIdenti
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    MusicClassifyCell *cell = [tableView dequeueReusableCellWithIdentifier:kMusicClassifyCellIdentifier];
+    MusicMoreListCell *cell = [tableView dequeueReusableCellWithIdentifier:kMusicMoreCellIdentifier];
     if (self.dataSource.count > indexPath.row) {
         cell.model = self.dataSource[indexPath.row];
-        cell.imageName = self.imageObjects[indexPath.row];
     }
-    
     return cell;
 }
 
-#pragma mark - table for delegate
+#pragma mark - TableView For delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     if (self.dataSource.count > indexPath.row) {
-        MusicClassModel *model = self.dataSource[indexPath.row];
-        MusicMoreListController *listVC = [[MusicMoreListController alloc] init];
-        listVC.param = model;
-        [self.navigationController pushViewController:listVC animated:YES];
+        MusicPlayModel *model = self.dataSource[indexPath.row];
+        MusicPlayListController *detailVC = [[MusicPlayListController alloc] init];
+        detailVC.param = model;
+        [self.navigationController pushViewController:detailVC animated:YES];
     }
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    return 220;
+    return 100;
 }
 
 @end

@@ -185,7 +185,7 @@
     self.musicTitleLabel.text = playerModel.title;
     self.artistNameLabel.text = playerModel.nickname;
     [self.albumImageView downloadImage:playerModel.coverLarge placeholder:@"music_lock_screen_placeholder"];
-    [self.screenImageView downloadImage:playerModel.coverLarge placeholder:@"icon_music_screen"];
+    [self.screenImageView downloadImage:playerModel.coverLarge placeholder:@"icon_logon_screen"];
     self.currentModel = playerModel;
     
     // 更新播放音源文件&管理信息
@@ -200,7 +200,7 @@
     self.musicTitleLabel.text = playerModel.title;
     self.artistNameLabel.text = playerModel.nickname;
     [self.albumImageView downloadImage:playerModel.coverLarge placeholder:@"music_lock_screen_placeholder"];
-    [self.screenImageView downloadImage:playerModel.coverLarge placeholder:@"icon_music_screen"];
+    [self.screenImageView downloadImage:playerModel.coverLarge placeholder:@"icon_logon_screen"];
     self.currentModel = playerModel;
 }
 

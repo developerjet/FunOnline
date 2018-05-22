@@ -17,7 +17,7 @@ typedef void(^BackDidFinishedBlock)(void);
 @property (nonatomic, copy) NSString *leftImage;
 @property (nonatomic, copy) NSString *rightImage;
 
-@property (nonatomic, assign) BOOL cycleShow;
+@property (nonatomic, assign) BOOL hideLine;
 @property (nonatomic, strong) AlbumModel *item;
 @property (nonatomic, strong) UIColor *titleColor;
 

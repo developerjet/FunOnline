@@ -10,7 +10,7 @@
 
 @implementation MusicClassHeaderView
 
-#pragma mark - Initialization
+#pragma mark - Life Cycle
 
 - (instancetype)initWithReuseIdentifier:(NSString *)reuseIdentifier {
     
@@ -28,11 +28,24 @@
         _classLabel.textColor = [UIColor colorDarkTextColor];
         [self.contentView addSubview:_classLabel];
         
+        _moreButton = [[UIButton alloc] init];
+        _moreButton.titleLabel.font = [UIFont systemFontOfSize:16];
+        [_moreButton setTitle:@"更多" forState:UIControlStateNormal];
+        [_moreButton setTitleColor:[UIColor colorDarkTextColor] forState:UIControlStateNormal];
+        [_moreButton addTarget:self action:@selector(moreDidEvent:) forControlEvents:UIControlEventTouchUpInside];
+        [self.contentView addSubview:_moreButton];
+        
         _lineView = [[UIView alloc] init];
         _lineView.backgroundColor = [UIColor colorWithHexString:@"e8e8e8"];
         [self.contentView addSubview:_lineView];
     }
     return self;
+}
+
+- (void)setModel:(MusicClassModel *)model {
+    _model = model;
+    
+    _classLabel.text = model.title;
 }
 
 #pragma mark - Layout
@@ -53,8 +66,23 @@
     CGFloat labelW = s_w - labelX - space;
     _classLabel.frame = CGRectMake(labelX, labelY, labelW, 20);
     
+    CGFloat moreW = 60;
+    CGFloat moreX = (s_w - moreW) - 10;
+    _moreButton.frame = CGRectMake(moreX, labelY, moreW, 20);
+    
     CGFloat lineH = 0.25;
     _lineView.frame = CGRectMake(0, s_h-lineH, SCREEN_WIDTH, lineH);
+}
+
+
+#pragma mark - Action
+
+- (void)moreDidEvent:(UIButton *)sender
+{
+    if (self.delegate && [self.delegate respondsToSelector:@selector(header:DidSelectClassModel:)]) {
+        
+        [self.delegate header:self DidSelectClassModel:self.model];
+    }
 }
 
 @end

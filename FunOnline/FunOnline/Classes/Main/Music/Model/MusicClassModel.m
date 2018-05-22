@@ -10,15 +10,6 @@
 
 @implementation MusicClassModel
 
-+ (void)load {
-    //驼峰转下划线
-    [self mj_setupReplacedKeyFromPropertyName121:^id(NSString *propertyName) {
-        
-        return [propertyName mj_underlineFromCamel];
-    }];
-}
-
-
 + (NSDictionary *)mj_objectClassInArray
 {
     return @{@"list":[MusicPlayModel class]};

@@ -151,7 +151,7 @@
                                                 <subviews>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jF0-xe-IWG">
                                                         <rect key="frame" x="0.0" y="0.0" width="75" height="88"/>
-                                                        <state key="normal" image="shuffle_icon"/>
+                                                        <state key="normal" image="loop_all_icon"/>
                                                         <connections>
                                                             <action selector="playingModeChange:" destination="-1" eventType="touchUpInside" id="mda-2m-Lzf"/>
                                                         </connections>
@@ -290,11 +290,11 @@
         <image name="big_pause_button" width="60" height="60"/>
         <image name="big_play_button" width="60" height="60"/>
         <image name="empty_heart" width="23" height="21"/>
+        <image name="loop_all_icon" width="20" height="16"/>
         <image name="menu" width="25" height="17"/>
         <image name="more_icon" width="25" height="23"/>
         <image name="music_lock_screen_placeholder" width="360" height="360"/>
         <image name="next_song" width="20" height="28"/>
         <image name="prev_song" width="20" height="28"/>
-        <image name="shuffle_icon" width="17" height="14"/>
     </resources>
 </document>

@@ -46,12 +46,6 @@
 
 - (void)configSubviews
 {
-    _titleLabel = [[UILabel alloc] init];
-    _titleLabel.textColor = [UIColor colorWhiteColor];
-    _titleLabel.font = [UIFont boldSystemFontOfSize:20];
-    _titleLabel.textAlignment = NSTextAlignmentCenter;
-    [self addSubview:_titleLabel];
-    
     _coverImageView = [[UIImageView alloc] init];
     _coverImageView.layer.borderWidth = 4.f;
     _coverImageView.layer.borderColor = [UIColor colorBoardLineColor].CGColor;
@@ -62,6 +56,8 @@
     [self addSubview:_coverImageView];
     
     _avatarImageView = [[UIImageView alloc] init];
+    _avatarImageView.layer.cornerRadius = 15.f;
+    _avatarImageView.layer.masksToBounds = YES;
     [self addSubview:_avatarImageView];
     
     _nameLabel = [[UILabel alloc] init];
@@ -70,6 +66,7 @@
     [self addSubview:_nameLabel];
     
     _introLable = [[UILabel alloc] init];
+    _introLable.numberOfLines = 2;
     _introLable.font = [UIFont systemFontOfSize:17];
     _introLable.textColor = [UIColor colorWhiteColor];
     [self addSubview:_introLable];
@@ -81,21 +78,15 @@
     
     _countButton = [UIButton buttonWithType:UIButtonTypeCustom];
     _countButton.titleLabel.font = [UIFont systemFontOfSize:17];
-    [_countButton setImage:[UIImage imageNamed:@"icon_music_star"] forState:UIControlStateNormal];
+    _countButton.titleEdgeInsets = UIEdgeInsetsMake(0, 5, 0, 0);
+    [_countButton setImage:[UIImage imageNamed:@"icon_play_ count"] forState:UIControlStateNormal];
     [self.coverImageView addSubview:_countButton];
 }
 
 - (void)initConstraints
 {
-    [self.titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerX.equalTo(self);
-        make.top.equalTo(self).offset(40);
-        make.left.equalTo(self).offset(50);
-        make.right.equalTo(self).offset(-50);
-    }];
-    
     [self.coverImageView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.titleLabel.mas_bottom).offset(30);
+        make.top.equalTo(self).offset(80);
         make.left.equalTo(self).offset(15);
         make.width.height.equalTo(@120);
     }];
@@ -125,8 +116,9 @@
     }];
     
     [self.countButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerX.equalTo(self.coverImageView);
         make.bottom.equalTo(self.coverImageView);
+        make.left.equalTo(self.coverImageView).offset(2);
+        make.right.equalTo(self.coverImageView).offset(-2);
     }];
 }
 
@@ -134,23 +126,14 @@
 
 - (void)setAlbum:(AlbumModel *)album {
     _album = album;
-
+    
     self.titleLabel.text = album.title;
-    self.introLable.text = album.intro;
     self.nameLabel.text  = album.nickname;
-    self.tagsLabel.text  = album.tags.length > 0 ? album.tags : @"暂无简介";
+    self.tagsLabel.text  = album.tags.length ? album.tags : @"暂无分类";
+    self.introLable.text = album.intro.length ? album.intro : @"暂无简介";
     [self.coverImageView downloadImage:album.coverMiddle placeholder:@"icon_default_image"];
     [self.avatarImageView downloadImage:album.avatarPath placeholder:@"icon_default_avatar"];
-    NSString *title =  [NSString stringWithFormat:@"%.f万", album.playTimes / 10000.0];
-    [self.countButton setTitle:title forState:UIControlStateNormal];
+    [self.countButton setTitle:[NSString stringWithFormat:@"%.f万", album.playTimes / 10000.0] forState:UIControlStateNormal];
 }
 
-#pragma mark - action
-
-- (void)backDidEvent:(UIButton *)sender {
-    
-    if (self.backDidBlock) {
-        self.backDidBlock();
-    }
-}
 @end

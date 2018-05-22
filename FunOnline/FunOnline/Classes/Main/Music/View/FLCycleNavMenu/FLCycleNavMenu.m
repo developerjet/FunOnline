@@ -8,34 +8,34 @@
 
 #import "FLCycleNavMenu.h"
 
-static CGFloat kDefaultHeight = 64.f; //导航栏高度
-static CGFloat kIphoneXHeight = 88.f; //导航栏高度
+static CGFloat kDefaultHeight = 64.f; //常用导航栏高度
+static CGFloat kIphoneXHeight = 88.f; //iPhoneX导航栏高度
 
 @interface FLCycleNavMenu()
 
 @property (nonatomic, strong) UIButton *rightButton;
 @property (nonatomic, strong) UIButton *leftButton;
 @property (nonatomic, strong) UILabel  *titleLabel;
+@property (nonatomic, strong) UIView   *lineView;
 
 @end
 
 @implementation FLCycleNavMenu
 
-#pragma mark - LifeCycle
+#pragma mark - Life Cycle
 
 - (instancetype)init {
     self = [super init];
     if (self) {
         CGFloat height = iPhoneX ? kIphoneXHeight : kDefaultHeight;
         self.frame = CGRectMake(0, 0, SCREEN_WIDTH, height);
-        self.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.f];
-        self.hidden = YES; //默认隐藏
-        [self setUp];
+        self.backgroundColor = [[UIColor colorThemeColor] colorWithAlphaComponent:0.f];
+        [self initSubview];
     }
     return self;
 }
 
-- (void)setUp
+- (void)initSubview
 {
     _leftButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [_leftButton setImage:[UIImage imageNamed:@"icon_return"] forState:UIControlStateNormal];
@@ -47,10 +47,14 @@ static CGFloat kIphoneXHeight = 88.f; //导航栏高度
     
     _titleLabel = [[UILabel alloc] init];
     _titleLabel.textAlignment = NSTextAlignmentCenter;
-    _titleLabel.text = @"欢迎来到FunOline";
     _titleLabel.textColor = [UIColor colorWhiteColor];
     _titleLabel.font = [UIFont systemFontOfSize:17];
     [self addSubview:_titleLabel];
+    
+    _lineView = [[UIView alloc] init];
+    _lineView.hidden = YES; //默认隐藏
+    _lineView.backgroundColor = [UIColor colorLightTextColor];
+    [self addSubview:_lineView];
 }
 
 - (void)backDidEvent:(UIButton *)sender {
@@ -92,12 +96,10 @@ static CGFloat kIphoneXHeight = 88.f; //导航栏高度
     self.titleLabel.text = item.title;
 }
 
-- (void)setCycleShow:(BOOL)cycleShow {
-    _cycleShow = cycleShow;
+- (void)setHideLine:(BOOL)hideLine {
+    _hideLine = hideLine;
     
-    self.hidden = cycleShow;
-    self.rightButton.hidden = cycleShow;
-    self.titleLabel.hidden = cycleShow;
+    self.lineView.hidden = hideLine;
 }
 
 #pragma mark - layoutSubviews
@@ -114,10 +116,14 @@ static CGFloat kIphoneXHeight = 88.f; //导航栏高度
     CGFloat rightX = self.frame.size.width - btnWH - spaec;
     self.rightButton.frame = CGRectMake(rightX, btnY, btnWH, btnWH);
     
-    CGFloat titleWidth = 200.f;
-    CGFloat titleX = (self.frame.size.width-titleWidth)/2;
-    self.titleLabel.frame  = CGRectMake(titleX, btnY, titleWidth, btnWH);
+    CGFloat titleW = 200.f;
+    CGFloat titleX = (self.frame.size.width-titleW)/2;
+    self.titleLabel.frame  = CGRectMake(titleX, btnY, titleW, btnWH);
+    
+    CGFloat lineY = self.frame.size.height - 0.25;
+    self.lineView.frame = CGRectMake(0, lineY, SCREEN_WIDTH, 0.25);
 }
 
 
 @end
+

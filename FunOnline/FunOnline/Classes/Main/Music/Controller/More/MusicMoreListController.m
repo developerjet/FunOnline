@@ -8,6 +8,7 @@
 
 #import "MusicMoreListController.h"
 #import "MusicPlayListController.h"
+#import <AdSupport/AdSupport.h>
 #import "MusicMoreListCell.h"
 
 static NSString *const kMoreListCellIdentifier = @"kMoreListCellIdentifier";
@@ -15,6 +16,8 @@ static NSString *const kMoreListCellIdentifier = @"kMoreListCellIdentifier";
 @interface MusicMoreListController ()
 
 @property (nonatomic, strong) NSMutableArray *dataObjects;
+@property (nonatomic, strong) NSDictionary *parameters;
+@property (nonatomic, strong) NSString  *urlString;
 
 @end
 
@@ -29,25 +32,42 @@ static NSString *const kMoreListCellIdentifier = @"kMoreListCellIdentifier";
     return _dataObjects;
 }
 
+- (NSDictionary *)parameters
+{
+    if (!_parameters) {
+        
+        _parameters = [[NSDictionary alloc] init];
+    }
+    return _parameters;
+}
+
+- (NSString *)urlString {
+    
+    if (!_urlString) {
+    
+        _urlString = [[NSString alloc] init];
+    }
+    return _urlString;
+}
+
 #pragma mark - Life Cycle
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    self.title = self.param.tname ? self.param.tname : self.param.title;
     
-    self.title = self.param.tname;
-    
-    [self configTableView];
+    [self initTableView];
 }
 
-- (void)configTableView
+- (void)initTableView
 {
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     [self.tableView registerNib:[UINib nibWithNibName:@"MusicMoreListCell" bundle:nil] forCellReuseIdentifier:kMoreListCellIdentifier];
     [self.view addSubview:self.tableView];
     
     WeakSelf;
-    self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+    self.tableView.mj_header = [FLRefreshGifHeader headerWithRefreshingBlock:^{
         weakSelf.page = 1;
         [weakSelf showRefreshing:weakSelf.page];
     }];
@@ -61,19 +81,38 @@ static NSString *const kMoreListCellIdentifier = @"kMoreListCellIdentifier";
 }
 
 - (void)showRefreshing:(NSInteger)page {
+    if (!_isMore) {
+        _urlString = url_music_list;
+        _parameters = @{
+                        @"calcDimension": @"hot",
+                        @"categoryId": @"2",
+                        @"tagName": self.param.tname,
+                        @"device": @"ios",
+                        @"pageSize": @"20",
+                        @"pageId": @(page),
+                        @"status": @"0"
+                        };
+    }else {
+        _urlString = url_more_music;
+        _parameters = @{
+                        @"appid": @"0",
+                        @"calcDimension": self.param.calcDimension,
+                        @"categoryId": @"2",
+                        @"device": @"iPhone",
+                        @"deviceId": [self getDeviceID],
+                        @"keywordId": @(self.param.keywordId),
+                        @"network": @"WIFI",
+                        @"operator": @"3",
+                        @"pageId": @(page),
+                        @"pageSize": @"20",
+                        @"scale": @"3",
+                        @"uid": @"0",
+                        @"version": @"6.3.90",
+                        @"xt": @"1526871454723"
+                        };
+    }
     
-    NSDictionary *params  = @{
-                              @"calcDimension": @"hot",
-                              @"categoryId": self.param.categoryId,
-                              @"tagName": self.param.tname,
-                              @"device": @"ios",
-                              @"pageSize": @"20",
-                              @"pageId": @(page),
-                              @"status": @"0"
-                              };
-
-    
-    [[RequestManager manager] GET:url_music_list parameters:params success:^(id  _Nullable responseObj) {
+    [[RequestManager manager] GET:self.urlString parameters:self.parameters success:^(id  _Nullable responseObj) {
         [self endRefreshing];
         if (!responseObj || ![responseObj isKindOfClass:[NSDictionary class]]) return;
         
@@ -98,6 +137,12 @@ static NSString *const kMoreListCellIdentifier = @"kMoreListCellIdentifier";
         
         [self endRefreshing];
     }];
+}
+
+- (NSString *)getDeviceID
+{
+    NSString *IDFA = [[[ASIdentifierManager sharedManager] advertisingIdentifier] UUIDString];
+    return IDFA;
 }
 
 #pragma mark - TableView For dataSource

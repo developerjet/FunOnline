@@ -103,6 +103,11 @@
     return [UIColor colorWithHexString:@"FFFFFF"];
 }
 
++ (UIColor *)viewBackGroundColor {
+    
+    return [UIColor colorWithHexString:@"F1F1F1"];
+}
+
 + (UIColor *)colorLoginRgisterLineColor {
     
     return [UIColor colorWithHexString:@"fed1a6"];

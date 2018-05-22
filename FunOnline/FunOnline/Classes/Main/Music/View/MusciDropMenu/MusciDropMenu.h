@@ -12,9 +12,10 @@
 typedef void(^BackDidFinishedBlock)(void);
 
 @interface MusciDropMenu : UIView
+
 /** 模型数据 */
 @property (nonatomic, strong) AlbumModel *album;
-/** 返回点击回调 */
+/** 返回回调 */
 @property (nonatomic, copy) BackDidFinishedBlock backDidBlock;
 
 @end
