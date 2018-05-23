@@ -82,12 +82,10 @@
 		2B5E8D8E20B4317300D6C842 /* AlbumModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B5E8D6B20B4317300D6C842 /* AlbumModel.m */; };
 		2B5E8D8F20B4317300D6C842 /* MusicMoreListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B5E8D6F20B4317300D6C842 /* MusicMoreListCell.m */; };
 		2B5E8D9020B4317300D6C842 /* FLCycleCarouselView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B5E8D7220B4317300D6C842 /* FLCycleCarouselView.m */; };
-		2B5E8D9120B4317300D6C842 /* MusicClassifyCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B5E8D7420B4317300D6C842 /* MusicClassifyCell.m */; };
 		2B5E8D9220B4317300D6C842 /* MusicPlayManagerBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B5E8D7620B4317300D6C842 /* MusicPlayManagerBar.m */; };
 		2B5E8D9320B4317300D6C842 /* MusciDropMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B5E8D7920B4317300D6C842 /* MusciDropMenu.m */; };
 		2B5E8D9420B4317300D6C842 /* MusicMoreListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2B5E8D7B20B4317300D6C842 /* MusicMoreListCell.xib */; };
 		2B5E8D9520B4317300D6C842 /* FLCycleNavMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B5E8D7E20B4317300D6C842 /* FLCycleNavMenu.m */; };
-		2B5E8D9620B4317300D6C842 /* MusicClassifyCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2B5E8D7F20B4317300D6C842 /* MusicClassifyCell.xib */; };
 		2B5E8D9720B4317300D6C842 /* MusicClassHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B5E8D8120B4317300D6C842 /* MusicClassHeaderView.m */; };
 		2B75493620750B54006B59B8 /* NSString+Estend.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B75493520750B54006B59B8 /* NSString+Estend.m */; };
 		2BC7EA7520A46EC7009FD3BC /* FLRefreshGifHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BC7EA7420A46EC7009FD3BC /* FLRefreshGifHeader.m */; };
@@ -269,7 +267,6 @@
 		2B5E8D7020B4317300D6C842 /* MusicClassHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MusicClassHeaderView.h; sourceTree = "<group>"; };
 		2B5E8D7220B4317300D6C842 /* FLCycleCarouselView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLCycleCarouselView.m; sourceTree = "<group>"; };
 		2B5E8D7320B4317300D6C842 /* FLCycleCarouselView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLCycleCarouselView.h; sourceTree = "<group>"; };
-		2B5E8D7420B4317300D6C842 /* MusicClassifyCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MusicClassifyCell.m; sourceTree = "<group>"; };
 		2B5E8D7620B4317300D6C842 /* MusicPlayManagerBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MusicPlayManagerBar.m; sourceTree = "<group>"; };
 		2B5E8D7720B4317300D6C842 /* MusicPlayManagerBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MusicPlayManagerBar.h; sourceTree = "<group>"; };
 		2B5E8D7920B4317300D6C842 /* MusciDropMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MusciDropMenu.m; sourceTree = "<group>"; };
@@ -277,8 +274,6 @@
 		2B5E8D7B20B4317300D6C842 /* MusicMoreListCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MusicMoreListCell.xib; sourceTree = "<group>"; };
 		2B5E8D7D20B4317300D6C842 /* FLCycleNavMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLCycleNavMenu.h; sourceTree = "<group>"; };
 		2B5E8D7E20B4317300D6C842 /* FLCycleNavMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLCycleNavMenu.m; sourceTree = "<group>"; };
-		2B5E8D7F20B4317300D6C842 /* MusicClassifyCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MusicClassifyCell.xib; sourceTree = "<group>"; };
-		2B5E8D8020B4317300D6C842 /* MusicClassifyCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MusicClassifyCell.h; sourceTree = "<group>"; };
 		2B5E8D8120B4317300D6C842 /* MusicClassHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MusicClassHeaderView.m; sourceTree = "<group>"; };
 		2B5E8D8220B4317300D6C842 /* MusicMoreListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MusicMoreListCell.h; sourceTree = "<group>"; };
 		2B75493420750B54006B59B8 /* NSString+Estend.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Estend.h"; sourceTree = "<group>"; };
@@ -884,9 +879,6 @@
 		2B5E8D6E20B4317300D6C842 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				2B5E8D8020B4317300D6C842 /* MusicClassifyCell.h */,
-				2B5E8D7420B4317300D6C842 /* MusicClassifyCell.m */,
-				2B5E8D7F20B4317300D6C842 /* MusicClassifyCell.xib */,
 				2B5E8D8220B4317300D6C842 /* MusicMoreListCell.h */,
 				2B5E8D6F20B4317300D6C842 /* MusicMoreListCell.m */,
 				2B5E8D7020B4317300D6C842 /* MusicClassHeaderView.h */,
@@ -1103,7 +1095,6 @@
 				2B5E8D9420B4317300D6C842 /* MusicMoreListCell.xib in Resources */,
 				2B00342020746B41003C5213 /* Assets.xcassets in Resources */,
 				2B435FED207C61020040420A /* MineTableViewCell.xib in Resources */,
-				2B5E8D9620B4317300D6C842 /* MusicClassifyCell.xib in Resources */,
 				2B430A9C207B40B300313B4C /* NewsTableViewCell.xib in Resources */,
 				2B5E8D8B20B4317300D6C842 /* MusicPlayerViewController.xib in Resources */,
 			);
@@ -1275,7 +1266,6 @@
 				2B430A9F207B42E900313B4C /* NewsModel.m in Sources */,
 				2B0034B22074A41B003C5213 /* LKSegmentItemBar.m in Sources */,
 				2B5E8D8420B4317300D6C842 /* MusicPlayListController.m in Sources */,
-				2B5E8D9120B4317300D6C842 /* MusicClassifyCell.m in Sources */,
 				2B029547207EED4B001FBA88 /* HomeViewController.m in Sources */,
 				2B5E8D8820B4317300D6C842 /* MusicPlayerViewController.m in Sources */,
 				2B00349920747F91003C5213 /* UIView+TJExtension.m in Sources */,
