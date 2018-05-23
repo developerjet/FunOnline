@@ -879,15 +879,15 @@
 		2B5E8D6E20B4317300D6C842 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				2B5E8D7520B4317300D6C842 /* MusicPlayBar */,
+				2B5E8D7120B4317300D6C842 /* InfiniteCarousel */,
+				2B5E8D7820B4317300D6C842 /* MusciDropMenu */,
+				2B5E8D7C20B4317300D6C842 /* FLCycleNavMenu */,
 				2B5E8D8220B4317300D6C842 /* MusicMoreListCell.h */,
 				2B5E8D6F20B4317300D6C842 /* MusicMoreListCell.m */,
+				2B5E8D7B20B4317300D6C842 /* MusicMoreListCell.xib */,
 				2B5E8D7020B4317300D6C842 /* MusicClassHeaderView.h */,
 				2B5E8D8120B4317300D6C842 /* MusicClassHeaderView.m */,
-				2B5E8D7120B4317300D6C842 /* InfiniteCarousel */,
-				2B5E8D7520B4317300D6C842 /* MusicPlayBar */,
-				2B5E8D7820B4317300D6C842 /* MusciDropMenu */,
-				2B5E8D7B20B4317300D6C842 /* MusicMoreListCell.xib */,
-				2B5E8D7C20B4317300D6C842 /* FLCycleNavMenu */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -895,8 +895,8 @@
 		2B5E8D7120B4317300D6C842 /* InfiniteCarousel */ = {
 			isa = PBXGroup;
 			children = (
-				2B5E8D7220B4317300D6C842 /* FLCycleCarouselView.m */,
 				2B5E8D7320B4317300D6C842 /* FLCycleCarouselView.h */,
+				2B5E8D7220B4317300D6C842 /* FLCycleCarouselView.m */,
 			);
 			path = InfiniteCarousel;
 			sourceTree = "<group>";
@@ -904,8 +904,8 @@
 		2B5E8D7520B4317300D6C842 /* MusicPlayBar */ = {
 			isa = PBXGroup;
 			children = (
-				2B5E8D7620B4317300D6C842 /* MusicPlayManagerBar.m */,
 				2B5E8D7720B4317300D6C842 /* MusicPlayManagerBar.h */,
+				2B5E8D7620B4317300D6C842 /* MusicPlayManagerBar.m */,
 			);
 			path = MusicPlayBar;
 			sourceTree = "<group>";
@@ -913,8 +913,8 @@
 		2B5E8D7820B4317300D6C842 /* MusciDropMenu */ = {
 			isa = PBXGroup;
 			children = (
-				2B5E8D7920B4317300D6C842 /* MusciDropMenu.m */,
 				2B5E8D7A20B4317300D6C842 /* MusciDropMenu.h */,
+				2B5E8D7920B4317300D6C842 /* MusciDropMenu.m */,
 			);
 			path = MusciDropMenu;
 			sourceTree = "<group>";

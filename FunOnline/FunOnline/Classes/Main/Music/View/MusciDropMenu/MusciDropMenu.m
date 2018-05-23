@@ -79,7 +79,7 @@
     _countButton = [UIButton buttonWithType:UIButtonTypeCustom];
     _countButton.titleLabel.font = [UIFont systemFontOfSize:17];
     _countButton.titleEdgeInsets = UIEdgeInsetsMake(0, 5, 0, 0);
-    [_countButton setImage:[UIImage imageNamed:@"icon_play_ count"] forState:UIControlStateNormal];
+    [_countButton setImage:[UIImage imageNamed:@"icon_music_star"] forState:UIControlStateNormal];
     [self.coverImageView addSubview:_countButton];
 }
 
