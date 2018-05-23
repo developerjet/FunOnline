@@ -211,7 +211,7 @@
             [self.pageScrollView setContentOffset:CGPointMake(((self.pageScrollView.contentSize.width - SCREEN_WIDTH) + button.tj_width*0.5), 0) animated:YES];
         }
     } completion:^(BOOL finished) {
-        self.scrollingView.tj_width   = button.tj_width;
+        self.scrollingView.tj_width   = button.titleLabel.tj_width;
         self.scrollingView.tj_centerX = button.tj_centerX;
     }];
 }
