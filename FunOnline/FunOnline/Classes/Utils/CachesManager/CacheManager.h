@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@class WallpaperModel, NewsModel;
+@class WallPaperModel, NewsModel;
 @interface CacheManager : NSObject
 
 /**
@@ -21,17 +21,17 @@
 /**
  *  收藏当前图片
  */
-- (void)startNewPictureWithModel:(WallpaperModel *)model;
+- (void)startNewPictureWithModel:(WallPaperModel *)model;
 
 /**
  *  取消当前图片收藏
  */
-- (void)unstartPictureWithModel:(WallpaperModel *)model;
+- (void)unstartPictureWithModel:(WallPaperModel *)model;
 
 /**
  *  图片是否已经收藏
  */
-- (BOOL)isStartPictureWithModel:(WallpaperModel *)model;
+- (BOOL)isStartPictureWithModel:(WallPaperModel *)model;
 
 /**
  * 图片所有的收藏数据
@@ -69,5 +69,17 @@
  是否登录
  */
 @property (nonatomic, assign) BOOL isLogon;
+
+
+#pragma mark - ***************** 图片缓存管理 *****************
+/**
+ 清除当前图片缓存
+ */
+- (void)clearCache;
+
+/**
+ 当前图片缓存大小
+ */
+@property (nonatomic, copy) NSString *cacheSize;
 
 @end

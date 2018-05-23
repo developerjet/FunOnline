@@ -8,8 +8,9 @@
 
 #import "MineViewController.h"
 #import "MineTableViewCell.h"
-#import <SDWebImageManager.h>
+
 #import "IBWaterWaveView.h"
+#import "SecurityManager.h"
 
 #import "FavoriteViewController.h"
 #import "FeedBackViewController.h"
@@ -22,24 +23,24 @@ static NSString *const kMineCellReuseIdentifier = @"kMineCellReuseIdentifier";
 @property (nonatomic, strong) UIImageView *logoImageView;
 @property (nonatomic, strong) UILabel     *userNameLabel;
 @property (nonatomic, strong) UIButton    *loginButton;
-@property (nonatomic, strong) NSArray     *mineObjets;
+@property (nonatomic, strong) NSArray     *dataObjets;
 
 @end
 
 @implementation MineViewController
 
-- (NSArray *)mineObjets
+- (NSArray *)dataObjets
 {
-    if (!_mineObjets) {
+    if (!_dataObjets) {
         
-        _mineObjets = @[
+        _dataObjets = @[
                         [MineModel initWithTitle:@"我的收藏" image:@"mine_star"],
                         [MineModel initWithTitle:@"给我评价" image:@"mine_store"],
                         [MineModel initWithTitle:@"意见反馈" image:@"mine_feedback"],
                         [MineModel initWithTitle:@"清除缓存" image:@"mine_clear"]
                         ];
     }
-    return _mineObjets;
+    return _dataObjets;
 }
 
 #pragma mark - Life Cycle
@@ -68,12 +69,12 @@ static NSString *const kMineCellReuseIdentifier = @"kMineCellReuseIdentifier";
 
 - (void)configSubview
 {
-    CGFloat h = iPhone5 ? SCREEN_HEIGHT * 0.4 : SCREEN_WIDTH * 0.62;
+    CGFloat h = iPhone5 ? SCREEN_HEIGHT * 0.42 : SCREEN_WIDTH * 0.62;
     UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, h)];
     
     // d0e765, 33aab4
-    IBWaterWaveView *waveView = [[IBWaterWaveView alloc] initWithFrame:headerView.bounds startColor:IBHexColorA(0xd0e765, 0.3) endColor:IBHexColorA(0x33aab4, 0.9)];
-    UIImageView *logoImageView = [[UIImageView alloc] initWithImage:[self reloadImage]];
+    IBWaterWaveView *waveView = [[IBWaterWaveView alloc] initWithFrame:headerView.bounds startColor:IBHexColorA(0xd0e765, 0.5) endColor:IBHexColorA(0x33aab4, 0.7)];
+    UIImageView *logoImageView = [[UIImageView alloc] initWithImage:[self reloadLogonImage]];
     logoImageView.frame = CGRectMake(0, 0, 90, 90);
     logoImageView.center = CGPointMake(headerView.mj_w*0.5, headerView.mj_h*0.5);
     logoImageView.layer.cornerRadius = 45.0;
@@ -89,8 +90,9 @@ static NSString *const kMineCellReuseIdentifier = @"kMineCellReuseIdentifier";
     CGFloat labelW = SCREEN_WIDTH - 30*2;
     self.userNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(30, labelY, labelW, 20)];
     self.userNameLabel.textAlignment = NSTextAlignmentCenter;
+    self.userNameLabel.font = [UIFont fontWithName:@"Helvetica Neue" size:20];
     self.userNameLabel.textColor = [UIColor colorDarkTextColor];
-    self.userNameLabel.text = [self reloadName];
+    self.userNameLabel.text = [self reloadLogonName];
     [headerView addSubview:self.userNameLabel];
     
     WeakSelf;
@@ -116,7 +118,7 @@ static NSString *const kMineCellReuseIdentifier = @"kMineCellReuseIdentifier";
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 44)];
     view.backgroundColor = [UIColor colorWhiteColor];
     self.loginButton = [[UIButton alloc] initWithFrame:view.bounds];
-    [self.loginButton setTitle:[self reloadLogon] forState:UIControlStateNormal];
+    [self.loginButton setTitle:[self reloadIsExist] forState:UIControlStateNormal];
     [self.loginButton setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
     [self.loginButton addTarget:self action:@selector(logonIn) forControlEvents:UIControlEventTouchUpInside];
     [view addSubview:self.loginButton];
@@ -125,7 +127,7 @@ static NSString *const kMineCellReuseIdentifier = @"kMineCellReuseIdentifier";
 
 - (void)logonIn {
     if ([CacheManager sharedManager].isLogon) {
-        [self showLogonSheet]; //退出
+        [self showExitSheet]; //退出
         return;
     }
     
@@ -135,10 +137,27 @@ static NSString *const kMineCellReuseIdentifier = @"kMineCellReuseIdentifier";
     logonVC.logonDidFinisedBlock = ^{
         [XDProgressHUD showHUDWithLongText:@"登录成功" hideDelay:1.0];
         [weakSelf updateObjects];
+        [weakSelf starFrting];
     };
 }
 
 - (void)logonOut {
+    WeakSelf;
+    if ([SecurityManager sharedInstance].state) {
+        [[SecurityManager sharedInstance] openIsTouchIDWithController:self message:@"请进行TouchID指纹正确验证" block:^(BOOL success, NSString *message) {
+            [XDProgressHUD showHUDWithText:message hideDelay:1.0];
+            if (success) {
+                [weakSelf exit];
+            }
+        }];
+    }else {
+        // 直接退出
+        [weakSelf exit];
+    }
+}
+
+- (void)exit
+{
     [XDProgressHUD showHUDWithIndeterminate:@"Logout..."];
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [XDProgressHUD hideHUD];
@@ -151,47 +170,63 @@ static NSString *const kMineCellReuseIdentifier = @"kMineCellReuseIdentifier";
     });
 }
 
-- (void)updateObjects
+// 开启&关闭指纹解锁
+- (void)starFrting
 {
-    self.userNameLabel.text  = [self reloadName];
-    self.logoImageView.image = [self reloadImage];
-    [self.loginButton setTitle:[self reloadLogon] forState:UIControlStateNormal];
+    [[SecurityManager sharedInstance] openIsTouchIDWithController:self message:@"是否开启TouchID指纹安全保护?" block:^(BOOL success, NSString *message) {
+        
+        [XDProgressHUD showHUDWithText:message hideDelay:1.0];
+    }];
 }
 
-- (NSString *)reloadLogon
+#pragma mark - Update UserInfo
+- (void)updateObjects
+{
+    self.userNameLabel.text  = [self reloadLogonName];
+    self.logoImageView.image = [self reloadLogonImage];
+    [self.loginButton setTitle:[self reloadIsExist] forState:UIControlStateNormal];
+}
+
+- (NSString *)reloadIsExist
 {
     return [CacheManager sharedManager].isLogon ? @"退出登录" : @"登录";
 }
 
-- (NSString *)reloadName {
-    
-    return [CacheManager sharedManager].isLogon ? @"FunOnline235" : @"";
+- (NSString *)reloadLogonName
+{
+    return [CacheManager sharedManager].isLogon ? [self getRandomString] : @"";
 }
 
-- (UIImage *)reloadImage
+- (NSString *)getRandomString
 {
-    UIImage *logoImage = nil;
+    NSString *str = @"FunOnline";
+    return [NSString stringWithFormat:@"%@%d", str, (int)(arc4random_uniform(500)+500)];
+}
+
+- (UIImage *)reloadLogonImage {
+    UIImage *image = nil;
+    
     if ([CacheManager sharedManager].isLogon) {
-        logoImage = [UIImage imageNamed:@"mine_exist_logo"];
+        image = [UIImage imageNamed:@"mine_exist_logo"];
     }else {
-        logoImage = [UIImage imageNamed:@"icon_default_avatar"];
+        image = [UIImage imageNamed:@"icon_default_avatar"];
     }
-    return logoImage;
+    return image;
 }
 
 #pragma mark - TableView for data
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
-    return self.mineObjets.count;
+    return self.dataObjets.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     MineTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kMineCellReuseIdentifier];
-    if (self.mineObjets.count > indexPath.row) {
-        cell.model = self.mineObjets[indexPath.row];
-        if (indexPath.row == self.mineObjets.count-1) {
+    if (self.dataObjets.count > indexPath.row) {
+        cell.model = self.dataObjets[indexPath.row];
+        if (indexPath.row == self.dataObjets.count-1) {
             cell.hideLine  = YES;
             cell.hideArrow = YES;
         }
@@ -230,7 +265,7 @@ static NSString *const kMineCellReuseIdentifier = @"kMineCellReuseIdentifier";
     [LEEAlert actionsheet].config
     .LeeTitle(@"温馨提示")
     .LeeContent(@"确定清除当前缓存吗? 图片会被清除")
-    .LeeContent([self getCachesSize])
+    .LeeContent([CacheManager sharedManager].cacheSize)
     .LeeAction(@"YES", ^{
         [weakSelf animClear];
     })
@@ -240,7 +275,7 @@ static NSString *const kMineCellReuseIdentifier = @"kMineCellReuseIdentifier";
     .LeeShow();
 }
 
-- (void)showLogonSheet
+- (void)showExitSheet
 {
     WeakSelf;
     [LEEAlert actionsheet].config
@@ -254,7 +289,7 @@ static NSString *const kMineCellReuseIdentifier = @"kMineCellReuseIdentifier";
     .LeeShow();
 }
 
-#pragma mark - Other For Handles
+#pragma mark - Other for handle
 
 - (void)jumpFavorite
 {
@@ -272,7 +307,7 @@ static NSString *const kMineCellReuseIdentifier = @"kMineCellReuseIdentifier";
 {
     [LEEAlert alert].config
     .LeeTitle(@"温馨提示")
-    .LeeContent(@"此功能暂未开放")
+    .LeeContent(@"应用上架AppStore后，就可以评论了哟")
     .LeeAction(@"OK", ^{
         
     })
@@ -284,27 +319,10 @@ static NSString *const kMineCellReuseIdentifier = @"kMineCellReuseIdentifier";
 - (void)animClear {
     [XDProgressHUD showHUDWithIndeterminate:@"正在清除..."];
     
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [XDProgressHUD hideHUD];
-        
-        [[SDImageCache sharedImageCache] clearMemory];
-        [[SDImageCache sharedImageCache] clearDiskOnCompletion:nil];
+        [[CacheManager sharedManager] clearCache];
     });
-}
-
-- (NSString *)getCachesSize {
-    NSInteger caches = [[SDImageCache sharedImageCache] getSize];
-    
-    if (caches) {
-        if (caches>1024.0*1024.0) {
-            return [NSString stringWithFormat:@"当前缓存 %.2fMB", caches/1024.0/1024.0];
-        }else if (caches>1024.0) {
-            return [NSString stringWithFormat:@"当前缓存 %.2fKB", caches/1024.0];
-        }else if (caches>0) {
-            return [NSString stringWithFormat:@"当前缓存 %.2luB", caches];
-        }
-    }
-    return @"当前缓存 0KB";
 }
 
 @end

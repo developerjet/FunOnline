@@ -8,9 +8,9 @@
 
 #import "BasicViewController.h"
 
-@class WallpaperModel;
+@class WallPaperModel;
 @interface CommentViewController : BasicViewController
 
-@property (nonatomic, strong) WallpaperModel *model;
+@property (nonatomic, strong) WallPaperModel *model;
 
 @end

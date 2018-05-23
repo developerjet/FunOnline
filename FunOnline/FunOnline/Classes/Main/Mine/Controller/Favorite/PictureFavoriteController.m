@@ -101,7 +101,7 @@ static NSString *const kPictureCellReuseIdentifier = @"kPictureCellReuseIdentifi
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     
     if (self.pictureObjects.count > indexPath.row) {
-        WallpaperModel *model = self.pictureObjects[indexPath.row];
+        WallPaperModel *model = self.pictureObjects[indexPath.row];
         CommentViewController *commentVC = [[CommentViewController alloc] init];
         commentVC.model = model;
         [self.navigationController pushViewController:commentVC animated:YES];

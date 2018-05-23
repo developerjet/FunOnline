@@ -10,7 +10,7 @@
 #import "CMSeactionMenuView.h"
 #import "CommentGroupCell.h"
 #import "SDPhotoBrowser.h"
-#import "WallpaperModel.h"
+#import "WallPaperModel.h"
 #import "Comment.h"
 
 static NSString *const kCommentCellIdentifier    = @"kCommentCellIdentifier";
@@ -155,7 +155,7 @@ typedef enum {
     
 }
 
-- (void)starVetify:(WallpaperModel *)model
+- (void)starVetify:(WallPaperModel *)model
 {
     dispatch_async(dispatch_get_main_queue(), ^{
         if ([[CacheManager sharedManager] isStartPictureWithModel:model]) {

@@ -165,6 +165,7 @@ static NSString *const kMoreListCellIdentifier = @"kMoreListCellIdentifier";
 #pragma mark - TableView For delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     if (self.dataObjects.count > indexPath.row) {
         MusicPlayModel *model = self.dataObjects[indexPath.row];

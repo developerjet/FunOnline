@@ -73,7 +73,7 @@ static NSString *const kNewWallPaperCellIdentifier = @"kNewWallPaperCellIdentifi
         if (!responseObj || ![responseObj isKindOfClass:[NSDictionary class]]) return;
         
         if ([responseObj[@"msg"] isEqualToString:@"success"]) {
-            NSArray *newObjects = [WallpaperModel mj_objectArrayWithKeyValuesArray:responseObj[@"res"][@"wallpaper"]];
+            NSArray *newObjects = [WallPaperModel mj_objectArrayWithKeyValuesArray:responseObj[@"res"][@"wallpaper"]];
             
             if (page == 1) {
                 [self.resultObjects removeAllObjects];
@@ -111,7 +111,7 @@ static NSString *const kNewWallPaperCellIdentifier = @"kNewWallPaperCellIdentifi
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     
     if (self.resultObjects.count > indexPath.row) {
-        WallpaperModel *model = self.resultObjects[indexPath.row];
+        WallPaperModel *model = self.resultObjects[indexPath.row];
         CommentViewController *commentVC = [[CommentViewController alloc] init];
         commentVC.model = model;
         [self.navigationController pushViewController:commentVC animated:YES];

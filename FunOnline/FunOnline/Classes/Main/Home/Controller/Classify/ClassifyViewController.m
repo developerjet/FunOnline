@@ -9,7 +9,7 @@
 #import "ClassifyViewController.h"
 #import "WallPaperCollectionCell.h"
 #import "ClassifyDetailController.h"
-#import "WallpaperModel.h"
+#import "WallPaperModel.h"
 
 #define column 2
 static NSString *const kClassifyReuseIdentifier = @"kClassifyReuseIdentifier";
@@ -68,7 +68,7 @@ static NSString *const kClassifyReuseIdentifier = @"kClassifyReuseIdentifier";
         
         if ([responseObj[@"msg"] isEqualToString:@"success"]) {
             
-             self.classifyGroup = [WallpaperModel mj_objectArrayWithKeyValuesArray:responseObj[@"res"][@"category"]];
+             self.classifyGroup = [WallPaperModel mj_objectArrayWithKeyValuesArray:responseObj[@"res"][@"category"]];
             
             if (self.classifyGroup.count) {
                 [self.collectionView reloadData];
@@ -103,7 +103,7 @@ static NSString *const kClassifyReuseIdentifier = @"kClassifyReuseIdentifier";
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     
     if (self.classifyGroup.count > indexPath.row) {
-        WallpaperModel *model = self.classifyGroup[indexPath.row];
+        WallPaperModel *model = self.classifyGroup[indexPath.row];
         ClassifyDetailController *detailVC = [[ClassifyDetailController alloc] init];
         detailVC.categoryID = model.Id;
         detailVC.titleString = model.name;

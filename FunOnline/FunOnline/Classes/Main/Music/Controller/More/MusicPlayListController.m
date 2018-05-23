@@ -235,6 +235,7 @@ static NSString *const kPlayListCellIdentifier = @"kPlayListCellIdentifier";
 #pragma mark - UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     if (self.playItems.count > indexPath.row) {
         self.playBar.playingIndex  = indexPath.row;

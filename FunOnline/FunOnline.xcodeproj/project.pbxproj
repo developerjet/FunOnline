@@ -46,7 +46,7 @@
 		2B029547207EED4B001FBA88 /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B02952B207EED4B001FBA88 /* HomeViewController.m */; };
 		2B029548207EED4B001FBA88 /* BannerModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B02952E207EED4B001FBA88 /* BannerModel.m */; };
 		2B029549207EED4B001FBA88 /* BannerValue.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B029530207EED4B001FBA88 /* BannerValue.m */; };
-		2B02954A207EED4B001FBA88 /* WallpaperModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B029532207EED4B001FBA88 /* WallpaperModel.m */; };
+		2B02954A207EED4B001FBA88 /* WallPaperModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B029532207EED4B001FBA88 /* WallPaperModel.m */; };
 		2B02954B207EED4B001FBA88 /* BannerHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B029535207EED4B001FBA88 /* BannerHeaderView.m */; };
 		2B02954C207EED4B001FBA88 /* WallPaperCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B029537207EED4B001FBA88 /* WallPaperCollectionCell.m */; };
 		2B029550207EFBB4001FBA88 /* FeedBackViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B02954F207EFBB4001FBA88 /* FeedBackViewController.m */; };
@@ -54,6 +54,8 @@
 		2B02955D207F6083001FBA88 /* FeedBackPhotoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2B02955A207F6083001FBA88 /* FeedBackPhotoCell.xib */; };
 		2B02955E207F6083001FBA88 /* FeedBackPhotoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B02955B207F6083001FBA88 /* FeedBackPhotoCell.m */; };
 		2B0BBDB8207B4D0D00CFF2E6 /* AppDelegate+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B0BBDB7207B4D0C00CFF2E6 /* AppDelegate+Utils.m */; };
+		2B3353D920B5A6500077627F /* FingerprintLogView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B3353D720B5A6500077627F /* FingerprintLogView.m */; };
+		2B3353DA20B5A6500077627F /* SecurityManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B3353D820B5A6500077627F /* SecurityManager.m */; };
 		2B430A9B207B40B300313B4C /* NewsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B430A99207B40B300313B4C /* NewsTableViewCell.m */; };
 		2B430A9C207B40B300313B4C /* NewsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2B430A9A207B40B300313B4C /* NewsTableViewCell.xib */; };
 		2B430A9F207B42E900313B4C /* NewsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B430A9E207B42E900313B4C /* NewsModel.m */; };
@@ -199,8 +201,8 @@
 		2B02952E207EED4B001FBA88 /* BannerModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BannerModel.m; sourceTree = "<group>"; };
 		2B02952F207EED4B001FBA88 /* BannerValue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BannerValue.h; sourceTree = "<group>"; };
 		2B029530207EED4B001FBA88 /* BannerValue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BannerValue.m; sourceTree = "<group>"; };
-		2B029531207EED4B001FBA88 /* WallpaperModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WallpaperModel.h; sourceTree = "<group>"; };
-		2B029532207EED4B001FBA88 /* WallpaperModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WallpaperModel.m; sourceTree = "<group>"; };
+		2B029531207EED4B001FBA88 /* WallPaperModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WallPaperModel.h; sourceTree = "<group>"; };
+		2B029532207EED4B001FBA88 /* WallPaperModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WallPaperModel.m; sourceTree = "<group>"; };
 		2B029534207EED4B001FBA88 /* BannerHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BannerHeaderView.h; sourceTree = "<group>"; };
 		2B029535207EED4B001FBA88 /* BannerHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BannerHeaderView.m; sourceTree = "<group>"; };
 		2B029536207EED4B001FBA88 /* WallPaperCollectionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WallPaperCollectionCell.h; sourceTree = "<group>"; };
@@ -214,6 +216,10 @@
 		2B02955C207F6083001FBA88 /* FeedBackPhotoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeedBackPhotoCell.h; sourceTree = "<group>"; };
 		2B0BBDB6207B4D0C00CFF2E6 /* AppDelegate+Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AppDelegate+Utils.h"; sourceTree = "<group>"; };
 		2B0BBDB7207B4D0C00CFF2E6 /* AppDelegate+Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AppDelegate+Utils.m"; sourceTree = "<group>"; };
+		2B3353D520B5A6500077627F /* FingerprintLogView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FingerprintLogView.h; sourceTree = "<group>"; };
+		2B3353D620B5A6500077627F /* SecurityManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SecurityManager.h; sourceTree = "<group>"; };
+		2B3353D720B5A6500077627F /* FingerprintLogView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FingerprintLogView.m; sourceTree = "<group>"; };
+		2B3353D820B5A6500077627F /* SecurityManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SecurityManager.m; sourceTree = "<group>"; };
 		2B430A98207B40B300313B4C /* NewsTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NewsTableViewCell.h; sourceTree = "<group>"; };
 		2B430A99207B40B300313B4C /* NewsTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NewsTableViewCell.m; sourceTree = "<group>"; };
 		2B430A9A207B40B300313B4C /* NewsTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NewsTableViewCell.xib; sourceTree = "<group>"; };
@@ -342,6 +348,7 @@
 			isa = PBXGroup;
 			children = (
 				04DEDF972090588A006DFF63 /* CachesManager */,
+				2B3353D420B5A6500077627F /* SecurityManager */,
 				04DEDF9A2090588A006DFF63 /* RequestManager */,
 				2BC7EA7220A46EC7009FD3BC /* FLHeaderRefresh */,
 			);
@@ -674,8 +681,8 @@
 				2B02952E207EED4B001FBA88 /* BannerModel.m */,
 				2B02952F207EED4B001FBA88 /* BannerValue.h */,
 				2B029530207EED4B001FBA88 /* BannerValue.m */,
-				2B029531207EED4B001FBA88 /* WallpaperModel.h */,
-				2B029532207EED4B001FBA88 /* WallpaperModel.m */,
+				2B029531207EED4B001FBA88 /* WallPaperModel.h */,
+				2B029532207EED4B001FBA88 /* WallPaperModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -711,6 +718,17 @@
 				2B02955A207F6083001FBA88 /* FeedBackPhotoCell.xib */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		2B3353D420B5A6500077627F /* SecurityManager */ = {
+			isa = PBXGroup;
+			children = (
+				2B3353D520B5A6500077627F /* FingerprintLogView.h */,
+				2B3353D620B5A6500077627F /* SecurityManager.h */,
+				2B3353D720B5A6500077627F /* FingerprintLogView.m */,
+				2B3353D820B5A6500077627F /* SecurityManager.m */,
+			);
+			path = SecurityManager;
 			sourceTree = "<group>";
 		};
 		2B435FDE207C5ADB0040420A /* PagingScrollMenu */ = {
@@ -807,10 +825,10 @@
 		2B5E8D5120B4317300D6C842 /* More */ = {
 			isa = PBXGroup;
 			children = (
-				2B5E8D5220B4317300D6C842 /* MusicMoreListController.m */,
+				2B5E8D5520B4317300D6C842 /* MusicPlayListController.h */,
 				2B5E8D5320B4317300D6C842 /* MusicPlayListController.m */,
 				2B5E8D5420B4317300D6C842 /* MusicMoreListController.h */,
-				2B5E8D5520B4317300D6C842 /* MusicPlayListController.h */,
+				2B5E8D5220B4317300D6C842 /* MusicMoreListController.m */,
 			);
 			path = More;
 			sourceTree = "<group>";
@@ -818,12 +836,12 @@
 		2B5E8D5620B4317300D6C842 /* MusicBase */ = {
 			isa = PBXGroup;
 			children = (
-				2B5E8D5720B4317300D6C842 /* MusicBaseViewController.m */,
 				2B5E8D5820B4317300D6C842 /* MusicHotViewController.h */,
-				2B5E8D5920B4317300D6C842 /* MusicClassifyController.m */,
-				2B5E8D5A20B4317300D6C842 /* MusicBaseViewController.h */,
 				2B5E8D5B20B4317300D6C842 /* MusicHotViewController.m */,
 				2B5E8D5C20B4317300D6C842 /* MusicClassifyController.h */,
+				2B5E8D5920B4317300D6C842 /* MusicClassifyController.m */,
+				2B5E8D5A20B4317300D6C842 /* MusicBaseViewController.h */,
+				2B5E8D5720B4317300D6C842 /* MusicBaseViewController.m */,
 			);
 			path = MusicBase;
 			sourceTree = "<group>";
@@ -831,28 +849,20 @@
 		2B5E8D5D20B4317300D6C842 /* Player */ = {
 			isa = PBXGroup;
 			children = (
-				2B5E8D5E20B4317300D6C842 /* PlayManager */,
 				2B5E8D5F20B4317300D6C842 /* MusicPlayerViewController.h */,
 				2B5E8D6020B4317300D6C842 /* MusicPlayerViewController.m */,
-				2B5E8D6120B4317300D6C842 /* View */,
 				2B5E8D6620B4317300D6C842 /* MusicPlayerViewController.xib */,
+				2B5E8D6120B4317300D6C842 /* View */,
 			);
 			path = Player;
-			sourceTree = "<group>";
-		};
-		2B5E8D5E20B4317300D6C842 /* PlayManager */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = PlayManager;
 			sourceTree = "<group>";
 		};
 		2B5E8D6120B4317300D6C842 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				2B5E8D6220B4317300D6C842 /* RotateImageView.h */,
 				2B5E8D6320B4317300D6C842 /* MusicPlayingMenu.h */,
 				2B5E8D6420B4317300D6C842 /* MusicPlayingMenu.m */,
+				2B5E8D6220B4317300D6C842 /* RotateImageView.h */,
 				2B5E8D6520B4317300D6C842 /* RotateImageView.m */,
 			);
 			path = View;
@@ -874,18 +884,18 @@
 		2B5E8D6E20B4317300D6C842 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				2B5E8D8020B4317300D6C842 /* MusicClassifyCell.h */,
+				2B5E8D7420B4317300D6C842 /* MusicClassifyCell.m */,
+				2B5E8D7F20B4317300D6C842 /* MusicClassifyCell.xib */,
+				2B5E8D8220B4317300D6C842 /* MusicMoreListCell.h */,
 				2B5E8D6F20B4317300D6C842 /* MusicMoreListCell.m */,
 				2B5E8D7020B4317300D6C842 /* MusicClassHeaderView.h */,
+				2B5E8D8120B4317300D6C842 /* MusicClassHeaderView.m */,
 				2B5E8D7120B4317300D6C842 /* InfiniteCarousel */,
-				2B5E8D7420B4317300D6C842 /* MusicClassifyCell.m */,
 				2B5E8D7520B4317300D6C842 /* MusicPlayBar */,
 				2B5E8D7820B4317300D6C842 /* MusciDropMenu */,
 				2B5E8D7B20B4317300D6C842 /* MusicMoreListCell.xib */,
 				2B5E8D7C20B4317300D6C842 /* FLCycleNavMenu */,
-				2B5E8D7F20B4317300D6C842 /* MusicClassifyCell.xib */,
-				2B5E8D8020B4317300D6C842 /* MusicClassifyCell.h */,
-				2B5E8D8120B4317300D6C842 /* MusicClassHeaderView.m */,
-				2B5E8D8220B4317300D6C842 /* MusicMoreListCell.h */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1234,6 +1244,7 @@
 				2B0BBDB8207B4D0D00CFF2E6 /* AppDelegate+Utils.m in Sources */,
 				2BE8D8E6207A17C900C522EA /* SDBrowserImageView.m in Sources */,
 				2B5E8D9720B4317300D6C842 /* MusicClassHeaderView.m in Sources */,
+				2B3353DA20B5A6500077627F /* SecurityManager.m in Sources */,
 				2B02953E207EED4B001FBA88 /* CommentGroupCell.m in Sources */,
 				2B00345020746C47003C5213 /* AppDelegate.m in Sources */,
 				04DEDF9E2090588A006DFF63 /* RequestManager.m in Sources */,
@@ -1242,13 +1253,14 @@
 				2B430A9B207B40B300313B4C /* NewsTableViewCell.m in Sources */,
 				2B00347C20746DC5003C5213 /* NewsViewController.m in Sources */,
 				2B02953A207EED4B001FBA88 /* CommentViewController.m in Sources */,
-				2B02954A207EED4B001FBA88 /* WallpaperModel.m in Sources */,
+				2B02954A207EED4B001FBA88 /* WallPaperModel.m in Sources */,
 				2B029549207EED4B001FBA88 /* BannerValue.m in Sources */,
 				2B5E8D8D20B4317300D6C842 /* MusicPlayModel.m in Sources */,
 				2B435FFA207C867A0040420A /* PictureFavoriteController.m in Sources */,
 				2B435FFD207C86930040420A /* NewsFavoriteController.m in Sources */,
 				2B029538207EED4B001FBA88 /* ClassifyDetailController.m in Sources */,
 				2B02954B207EED4B001FBA88 /* BannerHeaderView.m in Sources */,
+				2B3353D920B5A6500077627F /* FingerprintLogView.m in Sources */,
 				2B5E8D9520B4317300D6C842 /* FLCycleNavMenu.m in Sources */,
 				2B435FF7207C79850040420A /* FavoriteViewController.m in Sources */,
 				046181F22092C7E5006B8D03 /* UIImageView+HTRoundImage.m in Sources */,

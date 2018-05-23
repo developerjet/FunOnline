@@ -47,7 +47,7 @@
 
 #pragma mark - setter
 
-- (void)setModel:(WallpaperModel *)model {
+- (void)setModel:(WallPaperModel *)model {
     _model = model;
     
     self.titleLabel.text = model.name ? model.name : @"";

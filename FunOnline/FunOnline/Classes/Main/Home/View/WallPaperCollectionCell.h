@@ -7,20 +7,20 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "WallpaperModel.h"
+#import "WallPaperModel.h"
 
 @class WallPaperCollectionCell;
 
 @protocol WallPaperCellDelegate<NSObject>
 @optional
-- (void)cell:(WallPaperCollectionCell *)cell DidSelectIndexAtItem:(WallpaperModel *)item;
+- (void)cell:(WallPaperCollectionCell *)cell DidSelectIndexAtItem:(WallPaperModel *)item;
 @end
 
 @interface WallPaperCollectionCell : UICollectionViewCell
 
 @property (nonatomic, assign) BOOL isCheck;
 
-@property (nonatomic, strong) WallpaperModel *model;
+@property (nonatomic, strong) WallPaperModel *model;
 
 @property (nonatomic, weak) id<WallPaperCellDelegate> delegate;
 

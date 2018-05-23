@@ -93,11 +93,11 @@ static NSString *const kSearchResultIdentifier = @"kSearchResultIdentifier";
         
         if (objects && objects.count == 5) {
             NSDictionary *dict = objects[1]; //获取壁纸
-            self.searchResults = [WallpaperModel mj_objectArrayWithKeyValuesArray:dict[@"items"]];
+            self.searchResults = [WallPaperModel mj_objectArrayWithKeyValuesArray:dict[@"items"]];
             
             for (int idx = 0; idx < self.searchResults.count; idx++)
             {
-                WallpaperModel *item = self.searchResults[idx];
+                WallPaperModel *item = self.searchResults[idx];
                 [self.browserGroup addObject:item.img];
             }
         }
@@ -111,7 +111,7 @@ static NSString *const kSearchResultIdentifier = @"kSearchResultIdentifier";
 
 #pragma mark - WallPaperCellDelegate
 
-- (void)cell:(WallPaperCollectionCell *)cell DidSelectIndexAtItem:(WallpaperModel *)item {
+- (void)cell:(WallPaperCollectionCell *)cell DidSelectIndexAtItem:(WallPaperModel *)item {
     
     CommentViewController *commentVC = [[CommentViewController alloc] init];
     commentVC.model = item;

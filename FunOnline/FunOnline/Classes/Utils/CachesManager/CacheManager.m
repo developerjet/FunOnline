@@ -7,7 +7,8 @@
 //
 
 #import "CacheManager.h"
-#import "WallpaperModel.h"
+#import <SDWebImageManager.h>
+#import "WallPaperModel.h"
 #import "NewsModel.h"
 
 #define kCacheImage [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent:@"images.plist"]
@@ -61,7 +62,7 @@
 
 #pragma mark - ======================== 图片收藏 ========================
 
-- (void)startNewPictureWithModel:(WallpaperModel *)model {
+- (void)startNewPictureWithModel:(WallPaperModel *)model {
     if (!model) return;
     
     [self.imageStarGroup removeObject:model];
@@ -70,9 +71,9 @@
     [NSKeyedArchiver archiveRootObject:self.imageStarGroup toFile:kCacheImage];
 }
 
-- (void)unstartPictureWithModel:(WallpaperModel *)model
-{
-    [[CacheManager sharedManager].imageStarGroup enumerateObjectsUsingBlock:^(WallpaperModel *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+- (void)unstartPictureWithModel:(WallPaperModel *)model
+{   
+    [[CacheManager sharedManager].imageStarGroup enumerateObjectsUsingBlock:^(WallPaperModel *obj, NSUInteger idx, BOOL * _Nonnull stop) {
         
         if ([model.Id isEqualToString:obj.Id]) {
             
@@ -83,11 +84,11 @@
     [NSKeyedArchiver archiveRootObject:self.imageStarGroup toFile:kCacheImage];
 }
 
-- (BOOL)isStartPictureWithModel:(WallpaperModel *)model {
+- (BOOL)isStartPictureWithModel:(WallPaperModel *)model {
     if (!model) return NO;
     
     __block BOOL isStar = NO;
-    [self.imageStarGroup enumerateObjectsUsingBlock:^(WallpaperModel *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+    [self.imageStarGroup enumerateObjectsUsingBlock:^(WallPaperModel *obj, NSUInteger idx, BOOL * _Nonnull stop) {
         
         if ([model.Id isEqualToString:obj.Id]) {
          
@@ -144,5 +145,30 @@
     
     return [[[NSUserDefaults standardUserDefaults] objectForKey:UD_LOGON_ISEXIT] boolValue];
 }
+
+
+#pragma mark - 图片缓存管理
+
+- (NSString *)cacheSize {
+    NSInteger caches = [[SDImageCache sharedImageCache] getSize];
+    
+    if (caches) {
+        if (caches>1024.0*1024.0) {
+            return [NSString stringWithFormat:@"当前缓存 %.2fMB", caches/1024.0/1024.0];
+        }else if (caches>1024.0) {
+            return [NSString stringWithFormat:@"当前缓存 %.2fKB", caches/1024.0];
+        }else if (caches>0) {
+            return [NSString stringWithFormat:@"当前缓存 %.2luB", caches];
+        }
+    }
+    return @"当前缓存 0KB";
+}
+
+- (void)clearCache
+{    
+    [[SDImageCache sharedImageCache] clearMemory];
+    [[SDImageCache sharedImageCache] clearDiskOnCompletion:nil];
+}
+
 
 @end

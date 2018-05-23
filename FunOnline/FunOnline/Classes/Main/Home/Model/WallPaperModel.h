@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface WallpaperModel : NSObject
+@interface WallPaperModel : NSObject
 
 @property (nonatomic, assign) NSInteger atime;
 @property (nonatomic, strong) NSArray * cid;

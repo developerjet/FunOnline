@@ -88,7 +88,7 @@ static NSString *const kDetailCellReuseIdentifier = @"kDetailCellReuseIdentifier
         if (!responseObj || ![responseObj isKindOfClass:[NSDictionary class]]) return;
         
         if ([responseObj[@"msg"] isEqualToString:@"success"]) {
-            NSArray *newObjects = [WallpaperModel mj_objectArrayWithKeyValuesArray:responseObj[@"res"][@"wallpaper"]];
+            NSArray *newObjects = [WallPaperModel mj_objectArrayWithKeyValuesArray:responseObj[@"res"][@"wallpaper"]];
 
             if (page == 1) {
                 [self.dataSource removeAllObjects];
@@ -97,7 +97,7 @@ static NSString *const kDetailCellReuseIdentifier = @"kDetailCellReuseIdentifier
             
             for (int idx = 0; idx < newObjects.count; idx++)
             {
-                WallpaperModel *item = newObjects[idx];
+                WallPaperModel *item = newObjects[idx];
                 [self.browserImages addObject:item.img];
             }
             
@@ -112,7 +112,7 @@ static NSString *const kDetailCellReuseIdentifier = @"kDetailCellReuseIdentifier
 }
 
 #pragma mark - <WallPaperCellDelegate>
-- (void)cell:(WallPaperCollectionCell *)cell DidSelectIndexAtItem:(WallpaperModel *)item
+- (void)cell:(WallPaperCollectionCell *)cell DidSelectIndexAtItem:(WallPaperModel *)item
 {
     CommentViewController *commentVC = [[CommentViewController alloc] init];
     commentVC.model = item;

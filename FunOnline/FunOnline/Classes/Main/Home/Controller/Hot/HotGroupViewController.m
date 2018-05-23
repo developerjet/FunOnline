@@ -10,8 +10,9 @@
 #import "WallPaperCollectionCell.h"
 #import "WebBrowseViewController.h"
 #import "CommentViewController.h"
+#import "FingerprintLogView.h"
 #import "BannerHeaderView.h"
-#import "WallpaperModel.h"
+#import "WallPaperModel.h"
 
 static NSString *const kWallpaperCellIdentifier   = @"kWallpaperCellIdentifier";
 static NSString *const kWallpaperHeaderIdentifier = @"kWallpaperHeaderIdentifier";
@@ -65,6 +66,7 @@ static NSString *const kWallpaperHeaderIdentifier = @"kWallpaperHeaderIdentifier
     // Do any additional setup after loading the view.
     
     [self initSubview];
+    [self startVerify];
 }
 
 - (void)initSubview
@@ -84,6 +86,14 @@ static NSString *const kWallpaperHeaderIdentifier = @"kWallpaperHeaderIdentifier
     }];
     
     [self.collectionView.mj_header beginRefreshing];
+}
+
+- (void)startVerify {
+    //设置了指纹解锁(才须验证)
+    if ([SecurityManager sharedInstance].state) {
+        FingerprintLogView *logView = [[FingerprintLogView alloc] init];
+        [logView show];
+    }
 }
 
 - (void)loadHotObject
@@ -109,7 +119,7 @@ static NSString *const kWallpaperHeaderIdentifier = @"kWallpaperHeaderIdentifier
             }
             
             NSMutableArray *newBanners = [BannerModel mj_objectArrayWithKeyValuesArray:responseObj[@"res"][@"banner"]];
-            NSMutableArray *newWallpapers = [WallpaperModel mj_objectArrayWithKeyValuesArray:responseObj[@"res"][@"wallpaper"]];
+            NSMutableArray *newWallpapers = [WallPaperModel mj_objectArrayWithKeyValuesArray:responseObj[@"res"][@"wallpaper"]];
             [self.bannerDataGroup addObjectsFromArray:newBanners];
             [self.wallpaperGroup addObjectsFromArray:newWallpapers];
             
@@ -134,7 +144,7 @@ static NSString *const kWallpaperHeaderIdentifier = @"kWallpaperHeaderIdentifier
         return;
     }
     
-    WallpaperModel *model = [[WallpaperModel alloc] init];
+    WallPaperModel *model = [[WallPaperModel alloc] init];
     model.Id = item.Id;
     model.img = item.thumb;
     CommentViewController *commentVC = [[CommentViewController alloc] init];
@@ -182,7 +192,7 @@ static NSString *const kWallpaperHeaderIdentifier = @"kWallpaperHeaderIdentifier
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     
     if (self.wallpaperGroup.count > indexPath.row) {
-        WallpaperModel *model = self.wallpaperGroup[indexPath.row];
+        WallPaperModel *model = self.wallpaperGroup[indexPath.row];
         CommentViewController *commentVC = [[CommentViewController alloc] init];
         commentVC.model = model;
         [self.navigationController pushViewController:commentVC animated:YES];

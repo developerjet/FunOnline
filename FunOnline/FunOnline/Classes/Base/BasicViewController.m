@@ -24,7 +24,7 @@
         _tableView.contentInset = UIEdgeInsetsMake(0, 0, 44, 0);
         _tableView.showsHorizontalScrollIndicator = NO;
         _tableView.backgroundColor = [UIColor viewBackGroundColor];
-        _tableView.separatorColor = [UIColor clearColor];
+        _tableView.separatorColor = [UIColor colorBoardLineColor];
         _tableView.delegate = self;
         _tableView.dataSource = self;
     }

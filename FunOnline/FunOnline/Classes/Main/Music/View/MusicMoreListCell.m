@@ -25,7 +25,6 @@
     // Initialization code
     
     self.separatorInset = UIEdgeInsetsMake(0, 15, 0, 0);
-    self.selectionStyle = UITableViewCellSelectionStyleNone;
 }
 
 - (void)setModel:(MusicPlayModel *)model {

@@ -6,9 +6,9 @@
 //  Copyright © 2018年 iOS. All rights reserved.
 //
 
-#import "WallpaperModel.h"
+#import "WallPaperModel.h"
 
-@implementation WallpaperModel
+@implementation WallPaperModel
 
 MJCodingImplementation
 
