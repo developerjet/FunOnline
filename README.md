@@ -17,5 +17,4 @@
 * 后续功能继续完善中....<br>
 
 ### Licensed under the MIT licens.
-* 希望大家切勿私自拿该项目去appStore上架作为商业用途，否则必将追究相关法律及侵权责任<br>
 * 喜欢的朋友麻烦点个Star，非常感谢<br>
